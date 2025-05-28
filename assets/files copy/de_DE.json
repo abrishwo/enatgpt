@@ -1,0 +1,135 @@
+{
+    "ChatGPT": {
+        "Category": [
+            {
+                "name": "Astrologie",
+                "category_data": [{
+                        "title": "Numerologie",
+                        "description": "Hilft Ihnen, Ihre magischen Zahlen und verborgenen Kräfte mithilfe Ihrer Numerologienummer und Ihres Namens zu entschlüsseln.",
+                        "question": "Können Sie bitte meine Numerologiezahlen berechnen? Mein Name ist: John Wick, mein Geburtstag ist: 1995-01-01."
+                    },
+                    {
+                        "title": "Zodiac-Kompatibilität",
+                        "description": "Finden Sie heraus, wie Sie und Ihr Partner nach Sternzeichen miteinander kompatibel sind, zusammen mit Prozentsätzen in Liebe, Ehe usw.",
+                        "question": "Mein Sternzeichen ist Widder, das Sternzeichen meines Partners ist Stier. Können Sie bitte unsere Sternzeichenkompatibilität und die Prozentsätze in Liebe und Ehe berechnen?"
+                    },
+                    {
+                        "title": "tägliches Horoskop",
+                        "description": "Tägliches Horoskop aller Sternzeichen zu Liebe, Karriere & mehr und Anleitung für dein Leben.",
+                        "question": "Mein Sternzeichen ist: Steh auf, kannst du mir bitte mein Tageshoroskop über Liebe, Karriere & mehr schreiben."
+                    }, {
+                        "title": "Traumdeutung",
+                        "description": "Entdecken Sie die verborgenen Bedeutungen Ihrer Träume.",
+                        "question": "Können Sie meinen Traum erklären? Mein Traum war: Unternehmer"
+                    }, {
+                        "title": "Zukünftiges Geschlecht des Babys",
+                        "description": "Bekomme ich einen Jungen oder ein Mädchen? (Der Bericht garantiert keine Genauigkeit von 100 % und dient nur zu Unterhaltungszwecken.)",
+                        "question": "Können Sie bitte unser zukünftiges Babygeschlecht erraten? Geburtsmonat der Mutter: April, Geburtsmonat des Vaters: März, Monat der Empfängnis: Dezember."
+                    }
+                ]
+            },
+            {
+                "name": "Sozialen Medien",
+                "category_data": [{
+                        "title": "Social-Media-Beiträge",
+                        "description": "Steigern Sie Ihre Online-Präsenz mit unserer Post-Creation-Funktion für soziale Medien.",
+                        "question": "Erstellen Sie einen Beitrag auf „Facebook“, um die Markenbekanntheit zu steigern. Zweck: „Ranking“ Ziel: „Nein“, Ton: „Informativ“."
+                    },
+                    {
+                        "title": "Erhalte Musikvorschläge ♬",
+                        "description": "Entdecken Sie Ihren nächsten Lieblingssong mit unseren Musikexperten!",
+                        "question": "Erstellen Sie eine Playlist mit 10 Songs. Musikgenre ist: „Blues“, Sprache ist „Englisch“."
+                    },
+                    {
+                        "title": "Holen Sie sich das Herz von jemandem❤",
+                        "description": "Finden Sie Ihre perfekte Übereinstimmung mit unseren narrensicheren Flirttipps für Dating-Apps!",
+                        "question": "Erstellen Sie eine Playlist mit 10 Songs. Musikgenre ist: „Blues“, Sprache ist „Englisch“."
+                    }
+                ]
+            },
+            {
+                "name": "Genießen",
+                "category_data": [{
+                        "title": "SMS an Emoji",
+                        "description": "Verwandle Wörter in Emojis",
+                        "question": "Können Sie Wörter in Emojis verwandeln: Lachen"
+                    },
+                    {
+                        "title": "Filmempfehlung",
+                        "description": "Erhalten Sie Empfehlungen, was Sie sich ansehen sollten",
+                        "question": "Können Sie mir bitte einen Film mit einem IMDM-Score von 9 oder höher empfehlen, meine Stimmung ist: Ruhig, mein Lieblingsfilmgenre ist: Komödie"
+                    },
+                    {
+                        "title": "Betrunkenes Gespräch",
+                        "description": "Chatten Sie mit dem betrunkenen Chatbot",
+                        "question": "Warum bist du in romantischer Stimmung?"
+                    }, {
+                        "title": "ASCII-Art-Generator",
+                        "description": "Generieren Sie aus einem Wort oder Text eine ASCII-Grafik.",
+                        "question": "Können Sie aus diesem Satz bitte eine ASCII-Grafik generieren: Hallo"
+                    }, {
+                        "title": "Prompt-Generator",
+                        "description": "Generieren Sie kreative Aufforderungen",
+                        "question": "Generieren Sie kreative Aufforderungen mit diesem Satz: Hallo"
+                    }, {
+                        "title": "Buchzusammenfassung",
+                        "description": "Erhalten Sie eine Zusammenfassung des Buches",
+                        "question": "Können Sie dieses Buch bitte zusammenfassen? Der Autor des Buches ist: J. K. Rowling, der Name des Buches ist: Harry Potter."
+                    }, {
+                        "title": "Passwortgenerator",
+                        "description": "Erstellen Sie sichere Passwörter, die nicht zu knacken sind",
+                        "question": "Können Sie bitte ein sicheres Passwort erstellen, das nicht zu knacken ist, es sollte 12 Zeichen lang sein."
+                    }, {
+                        "title": "Kalorienrechner",
+                        "description": "Rechner für die tägliche Kalorienaufnahme",
+                        "question": "Können Sie bitte meine tägliche Kalorienaufnahme berechnen, mein Geschlecht ist: Männlich, mein Alter ist: 25, meine Größe beträgt 170 Zentimeter, mein Gewicht beträgt 70 Kilogramm, ich bin täglich leicht aktiv."
+                    }, {
+                        "title": "Tägliche Motivationszitate",
+                        "description": "Holen Sie sich Ihre tägliche Dosis Inspiration und Positivität mit unseren handverlesenen Motivationszitaten!",
+                        "question": "Schreib mir ein tägliches Motivationszitat."
+                    }
+                ]
+            },
+            {
+                "name": "Aushängen",
+                "category_data": [{
+                    "title": "Lokale Sehenswürdigkeiten",
+                    "description": "Entdecken Sie Sehenswürdigkeiten und Attraktionen in der Nähe.",
+                    "question": "Schlagen Sie Orte vor, die Sie in der Nähe meines Standorts besuchen können. Meine Stadt ist: „Las Vegas“."
+                }]
+            },
+            {
+                "name": "Ausbildung",
+                "category_data": [{
+                    "title": "Essay-Autor",
+                    "description": "Ass mit unseren fachkundigen Essay-Schreibdiensten!",
+                    "question": "Schreiben Sie mir einen Aufsatz. Thema ist: „Natur“, Zweck des Aufsatzes ist: „Überzeugen“"
+                }, {
+                    "title": "Schreibe den Satz um",
+                    "description": "Verbessern Sie Ihr Schreiben und kommunizieren Sie effektiver mit unseren Tools zum Umschreiben von Sätzen!",
+                    "question": "Schreiben Sie den Satz um: „Was machst du?“, Zweck des Umschreibens ist „Sprache vereinfachen“."
+                }, {
+                    "title": "Textkorrektor",
+                    "description": "Polieren Sie Ihr Schreiben auf und fangen Sie jeden Fehler mit unserer fachmännischen Textkorrektur!",
+                    "question": "Korrigieren Sie den Satz: „wo bist du“"
+                }]
+            },
+            {
+                "name": "Gesundheit",
+                "category_data": [{
+                    "title": "Holen Sie sich Ihren Fitnessplan",
+                    "description": "Erhalten Sie einen maßgeschneiderten persönlichen Trainingsplan",
+                    "question": "Erstellen Sie einen Fitnessplan für mich. Mein Fitnesslevel ist „Leichtes Training“, Mein Fitnessziel ist: „Verbesserung der kardiovaskulären Ausdauer“"
+                }]
+            },
+            {
+                "name": "Übersetzung",
+                "category_data": [{
+                    "title": "Übersetzung",
+                    "description": "Übersetzen Sie Text in eine beliebige Sprache",
+                    "question": "Können Sie bitte ins Französische übersetzen? Übersetze dies: „Wo bist du“"
+                }]
+            }
+        ]
+    }
+}

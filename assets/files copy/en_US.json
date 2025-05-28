@@ -1,0 +1,135 @@
+{
+    "ChatGPT": {
+        "Category": [
+            {
+                "name": "Astrology",
+                "category_data": [{
+                        "title": "Numerology",
+                        "description": "Helps you decode your magic numbers and hidden powers using your numerology number and name.",
+                        "question": "Can you please calculate my numerology numbers ? My name is: John Wick, my birthday is: 1995-01-01."
+                    },
+                    {
+                        "title": "Zodiac Compatibility",
+                        "description": "Find out how you and your partner will be compatible with each other as per zodiac signs, along with percentages in love, marriage, etc.",
+                        "question": "My zodiac sign is aries, my partner’s zodiac sign is taurus. Can you please calculate our zodiac compatibility and along with percentages in love and marriage?"
+                    },
+                    {
+                        "title": "Daily Horoscope",
+                        "description": "Daily horoscope of all zodiac signs on love,career, & more and get guidance for your life.",
+                        "question": "My Zodiac sign is : Arise, can you please write my daily horoscope on love, career & more."
+                    }, {
+                        "title": "Dream interpretation",
+                        "description": "Discover the hidden meanings of your dreams.",
+                        "question": "Can you explain my dream? My dream was about: entrepreneur"
+                    }, {
+                        "title": "Future Baby Gender",
+                        "description": "Will I have a boy or a girl? (The report doesn't guarantee %100 accuracy and is made for entertainment purposes only.)",
+                        "question": "Can you please guess our future baby gender? Mother’s month of birth is: April, father’s month of birth is: March, conception month is: December."
+                    }
+                ]
+            },
+            {
+                "name": "Social Media",
+                "category_data": [{
+                        "title": "Social Media Posts",
+                        "description": "Boost your online presence with our social media post-creation feature.",
+                        "question": "Create a post on “ Facebook “ in order to increase brand awareness. Purpose: “Ranking” Target:”No”, Tone: “ Informative “."
+                    },
+                    {
+                        "title": "Get music suggestions ♬",
+                        "description": "Discover your next favorite song with our music experts!",
+                        "question": "Create a playlist of 10 songs. Music genre is : “ Blues”,langauge is “ English ”."
+                    },
+                    {
+                        "title": "Get someone's heart❤",
+                        "description": "Find your perfect match with our foolproof flirting tips for dating apps!",
+                        "question": "Create a playlist of 10 songs. Music genre is : “ Blues”,langauge is “ English ”."
+                    }
+                ]
+            },
+            {
+                "name": "Enjoy",
+                "category_data": [{
+                        "title": "Text to Emoji",
+                        "description": "Transform words into emojis",
+                        "question": "Can you transform words into emojis : Laugh"
+                    },
+                    {
+                        "title": "Movie recommendation",
+                        "description": "Get recommendations about what you should watch",
+                        "question": "Can you please recommend me a movie with an IMDM score of 9 or higher, my mood is: Calm, my favourite movie genre is: Comedy"
+                    },
+                    {
+                        "title": "Drunk conversation",
+                        "description": "Chat with the drunk chatbot",
+                        "question": "Why are you in romantic mood?"
+                    }, {
+                        "title": "ASCII Art Generator",
+                        "description": "Generate an ASCII graphic from a word or text.",
+                        "question": "Can you please generate an ASCII graphics from this sentence: Hello"
+                    }, {
+                        "title": "Prompt generator",
+                        "description": "Generate creative prompts",
+                        "question": "Generate creative prompts with this sentence: Hello"
+                    }, {
+                        "title": "Book Summary",
+                        "description": "Get a summary of the book",
+                        "question": "Can you please summarize this book. Book’s author is: J. K. Rowling, Book name is: Harry potter."
+                    }, {
+                        "title": "Password Generator",
+                        "description": "Create secure passwords that are impossible to crack",
+                        "question": "Can you please create a secure password that is impossible to crack, it should be 12 characters length."
+                    }, {
+                        "title": "Calorie Calculator",
+                        "description": "Daily Calorie Intake Calculator",
+                        "question": "Can you please calculate my daily calorie intake amount, my gender is: Male, my age is:25, my height is 170 centimeters, my weight is 70 kilograms, i am lightly active on a daily basis."
+                    }, {
+                        "title": "Daily Motivation Quotes",
+                        "description": "Get your daily dose of inspiration and positivity with our hand picked motivation quotes!",
+                        "question": "Write me a daily motivation quote."
+                    }
+                ]
+            },
+            {
+                "name": "Hang out",
+                "category_data": [{
+                    "title": "Local attractions",
+                    "description": "Discover nearby points of interest and attractions.",
+                    "question": "Suggest places to visit near my location.My city is : “ Las Vegas “."
+                }]
+            },
+            {
+                "name": "Education",
+                "category_data": [{
+                    "title": "Essay writer",
+                    "description": "Ace with our expert essay writing services!",
+                    "question": "Write me essay. Topic is : “ Nature “ , purpose of the essay is : “ Persuade “"
+                }, {
+                    "title": "Rewrite the sentence",
+                    "description": "Elevate your writing and communicate more effectively with our sentence-rewriting tools!",
+                    "question": "Rewrite the sentence : “ What are you doing “ , purpose of the rewriting is “ Simplify language “"
+                }, {
+                    "title": "Text corrector",
+                    "description": "Polish your writing and catch every mistake with our expert text correction!",
+                    "question": "Correct the sentence : “ where are you “"
+                }]
+            },
+            {
+                "name": "Health",
+                "category_data": [{
+                    "title": "Get your fitness plan",
+                    "description": "Receive a customized personal training plan",
+                    "question": "Create a fitness plan for me. My fitness level is “ Lightly Exercising “ , My fitness goal is : “ Improve cardiovascular endurance “"
+                }]
+            },
+            {
+                "name": "Translation",
+                "category_data": [{
+                    "title": "Translation",
+                    "description": "Translate text into any langauage",
+                    "question": "Can you please translate to the French language? Translate this : “ Where are you”"
+                }]
+            }
+        ]
+    }
+}

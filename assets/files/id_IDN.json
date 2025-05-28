@@ -1,0 +1,135 @@
+{
+    "ChatGPT": {
+        "Category": [
+            {
+                "name": "Perbintangan",
+                "category_data": [{
+                        "title": "Numerologi",
+                        "description": "Membantu Anda memecahkan kode angka ajaib dan kekuatan tersembunyi menggunakan nomor dan nama numerologi Anda.",
+                        "question": "Bisakah Anda menghitung angka numerologi saya? Nama saya: John Wick, ulang tahun saya: 1995-01-01."
+                    },
+                    {
+                        "title": "Kompatibilitas Zodiak",
+                        "description": "Cari tahu bagaimana Anda dan pasangan akan cocok satu sama lain sesuai tanda zodiak, bersama dengan persentase cinta, pernikahan, dll.",
+                        "question": "Zodiak saya adalah aries, zodiak pasangan saya adalah taurus. Bisakah Anda menghitung kecocokan zodiak kami dan bersama dengan persentase dalam cinta dan pernikahan?"
+                    },
+                    {
+                        "title": "Horoskop Harian",
+                        "description": "Horoskop harian dari semua tanda zodiak tentang cinta, karier, & lainnya dan dapatkan panduan untuk hidup Anda.",
+                        "question": "Zodiak saya adalah: Bangkitlah, bisakah Anda menulis ramalan bintang harian saya tentang cinta, karier & lainnya."
+                    }, {
+                        "title": "Interpretasi mimpi",
+                        "description": "Temukan makna tersembunyi dari mimpi Anda.",
+                        "question": "Bisakah Anda menjelaskan mimpi saya? Impian saya adalah tentang: pengusaha"
+                    }, {
+                        "title": "Jenis Kelamin Bayi Masa Depan",
+                        "description": "Apakah saya akan memiliki anak laki-laki atau perempuan? (Laporan tidak menjamin keakuratan 100% dan dibuat hanya untuk tujuan hiburan.)",
+                        "question": "Bisakah Anda menebak jenis kelamin bayi masa depan kita? Bulan lahir ibu adalah: April, bulan lahir ayah adalah: Maret, bulan pembuahan adalah: Desember."
+                    }
+                ]
+            },
+            {
+                "name": "Media sosial",
+                "category_data": [{
+                        "title": "Posting Media Sosial",
+                        "description": "Tingkatkan kehadiran online Anda dengan fitur pasca pembuatan media sosial kami.",
+                        "question": "Buat posting di \" Facebook \" untuk meningkatkan kesadaran merek. Tujuan: “Peringkat” Target: “Tidak”, Nada: “ Informatif “."
+                    },
+                    {
+                        "title": "Dapatkan saran musik ♬",
+                        "description": "Temukan lagu favorit Anda berikutnya dengan pakar musik kami!",
+                        "question": "Buat playlist berisi 10 lagu. Genre musik adalah : “ Blues”, bahasanya adalah “ English ”."
+                    },
+                    {
+                        "title": "Dapatkan hati seseorang❤",
+                        "description": "Temukan pasangan sempurna Anda dengan tips rayuan kami yang sangat mudah untuk aplikasi kencan!",
+                        "question": "Buat playlist berisi 10 lagu. Genre musik adalah : “ Blues”, bahasanya adalah “ English ”."
+                    }
+                ]
+            },
+            {
+                "name": "Menikmati",
+                "category_data": [{
+                        "title": "SMS ke Emoji",
+                        "description": "Ubah kata menjadi emoji",
+                        "question": "Bisakah Anda mengubah kata menjadi emoji : Tertawa"
+                    },
+                    {
+                        "title": "Rekomendasi film",
+                        "description": "Dapatkan rekomendasi tentang apa yang sebaiknya Anda tonton",
+                        "question": "Bisakah Anda merekomendasikan saya film dengan skor IMDM 9 atau lebih tinggi, suasana hati saya: Tenang, genre film favorit saya adalah: Komedi"
+                    },
+                    {
+                        "title": "Percakapan mabuk",
+                        "description": "Ngobrol dengan chatbot mabuk",
+                        "question": "Mengapa Anda dalam suasana romantis?"
+                    }, {
+                        "title": "Generator Seni ASCII",
+                        "description": "Hasilkan grafik ASCII dari kata atau teks.",
+                        "question": "Bisakah Anda membuat grafik ASCII dari kalimat ini: Halo"
+                    }, {
+                        "title": "Generator cepat",
+                        "description": "Hasilkan permintaan kreatif",
+                        "question": "Hasilkan permintaan kreatif dengan kalimat ini: Halo"
+                    }, {
+                        "title": "Ringkasan buku",
+                        "description": "Dapatkan ringkasan buku",
+                        "question": "Bisakah Anda meringkas buku ini. Penulis buku adalah: J. K. Rowling, Nama buku adalah: Harry potter."
+                    }, {
+                        "title": "Pembuat Kata Sandi",
+                        "description": "Buat kata sandi aman yang tidak mungkin diretas",
+                        "question": "Bisakah Anda membuat kata sandi aman yang tidak mungkin diretas, panjangnya harus 12 karakter."
+                    }, {
+                        "title": "Kalkulator Kalori",
+                        "description": "Kalkulator Asupan Kalori Harian",
+                        "question": "Bisakah Anda menghitung jumlah asupan kalori harian saya, jenis kelamin saya adalah: Laki-laki, usia saya: 25 tahun, tinggi badan saya 170 sentimeter, berat badan saya 70 kilogram, saya sedikit aktif setiap hari."
+                    }, {
+                        "title": "Kutipan Motivasi Harian",
+                        "description": "Dapatkan dosis inspirasi dan kepositifan harian Anda dengan kutipan motivasi pilihan kami!",
+                        "question": "Tuliskan saya kutipan motivasi harian."
+                    }
+                ]
+            },
+            {
+                "name": "Nongkrong bareng",
+                "category_data": [{
+                    "title": "Atraksi lokal",
+                    "description": "Temukan tempat menarik dan atraksi terdekat.",
+                    "question": "Sarankan tempat untuk dikunjungi di dekat lokasi saya. Kota saya adalah : “ Las Vegas “."
+                }]
+            },
+            {
+                "name": "Pendidikan",
+                "category_data": [{
+                    "title": "Penulis esai",
+                    "description": "Kuasai layanan penulisan esai ahli kami!",
+                    "question": "Menulis saya esai. Topiknya adalah : “ Nature “ , tujuan esai adalah : “ Membujuk “"
+                }, {
+                    "title": "Tulis ulang kalimatnya",
+                    "description": "Tingkatkan tulisan Anda dan komunikasikan lebih efektif dengan alat penulisan ulang kalimat kami!",
+                    "question": "Tulis ulang kalimat : “What are you do” , tujuan penulisan ulang adalah “Simplify language”"
+                }, {
+                    "title": "Korektor teks",
+                    "description": "Poles tulisan Anda dan tangkap setiap kesalahan dengan koreksi teks ahli kami!",
+                    "question": "Perbaiki kalimat : “kamu dimana”"
+                }]
+            },
+            {
+                "name": "Kesehatan",
+                "category_data": [{
+                    "title": "Dapatkan rencana kebugaran Anda",
+                    "description": "Menerima rencana pelatihan pribadi yang disesuaikan",
+                    "question": "Buat rencana kebugaran untuk saya. Tingkat kebugaran saya adalah “Latihan Ringan”, Tujuan kebugaran saya adalah: “Meningkatkan daya tahan kardiovaskular”"
+                }]
+            },
+            {
+                "name": "Terjemahan",
+                "category_data": [{
+                    "title": "Terjemahan",
+                    "description": "Terjemahkan teks ke dalam bahasa apa pun",
+                    "question": "Bisakah Anda menerjemahkan ke bahasa Prancis? Terjemahkan ini: \"Di mana kamu\""
+                }]
+            }
+        ]
+    }
+}

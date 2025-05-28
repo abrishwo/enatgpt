@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "461596804402",
+    "project_id": "likup-c4339",
+    "storage_bucket": "likup-c4339.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461596804402:android:29bbcc5044feb40f36432b",
+        "android_client_info": {
+          "package_name": "com.enat.gpt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "461596804402-2ski0vato7u8mci3ubfrjksf6450kuid.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbood3F_CI8jdzahQ1CZU6jYck8zaP7YU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "461596804402-2ski0vato7u8mci3ubfrjksf6450kuid.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-9980095986316034~9842299644"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461596804402:android:7f2a1b8ea00efc2e36432b",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "461596804402-2ski0vato7u8mci3ubfrjksf6450kuid.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbood3F_CI8jdzahQ1CZU6jYck8zaP7YU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "461596804402-2ski0vato7u8mci3ubfrjksf6450kuid.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461596804402:android:8d30b8260cc47cfd36432b",
+        "android_client_info": {
+          "package_name": "com.example.likup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "461596804402-2ski0vato7u8mci3ubfrjksf6450kuid.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbood3F_CI8jdzahQ1CZU6jYck8zaP7YU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "461596804402-2ski0vato7u8mci3ubfrjksf6450kuid.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

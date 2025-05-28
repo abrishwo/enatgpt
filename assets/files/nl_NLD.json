@@ -1,0 +1,135 @@
+{
+    "ChatGPT": {
+        "Category": [
+            {
+                "name": "Astrologie",
+                "category_data": [{
+                        "title": "Numerologie",
+                        "description": "Helpt je bij het ontcijferen van je magische getallen en verborgen krachten met behulp van je numerologische nummer en naam.",
+                        "question": "Kunt u alstublieft mijn numerologische getallen berekenen? Mijn naam is: John Wick, mijn verjaardag is: 1995-01-01."
+                    },
+                    {
+                        "title": "Zodiac-compatibiliteit",
+                        "description": "Ontdek hoe jij en je partner compatibel zullen zijn met elkaar volgens sterrenbeelden, samen met percentages in liefde, huwelijk, enz.",
+                        "question": "Mijn sterrenbeeld is Ram, het sterrenbeeld van mijn partner is Stier. Kunt u alstublieft onze dierenriemcompatibiliteit berekenen en samen met percentages in liefde en huwelijk?"
+                    },
+                    {
+                        "title": "Dagelijkse horoscoop",
+                        "description": "Dagelijkse horoscoop van alle sterrenbeelden over liefde, carrière en meer en krijg begeleiding voor je leven.",
+                        "question": "Mijn sterrenbeeld is: Sta op, kun je alsjeblieft mijn dagelijkse horoscoop schrijven over liefde, carrière en meer."
+                    }, {
+                        "title": "Droom interpretatie",
+                        "description": "Ontdek de verborgen betekenissen van je dromen.",
+                        "question": "Kun je mijn droom uitleggen? Mijn droom ging over: ondernemer"
+                    }, {
+                        "title": "Toekomstig babygeslacht",
+                        "description": "Krijg ik een jongen of een meisje? (Het rapport garandeert geen 100% nauwkeurigheid en is alleen gemaakt voor amusementsdoeleinden.)",
+                        "question": "Kun je ons toekomstige babygeslacht raden? Geboortemaand van moeder is: april, geboortemaand van vader is: maart, bevruchtingsmaand is: december."
+                    }
+                ]
+            },
+            {
+                "name": "Sociale media",
+                "category_data": [{
+                        "title": "Berichten op sociale media",
+                        "description": "Geef uw online aanwezigheid een boost met onze functie voor postcreatie op sociale media.",
+                        "question": "Maak een bericht op \"Facebook\" om de naamsbekendheid te vergroten. Doel: \"Rangschikking\" Doel:\"Nee\", Toon: \"Informatief\"."
+                    },
+                    {
+                        "title": "Ontvang muzieksuggesties ♬",
+                        "description": "Ontdek je volgende favoriete nummer met onze muziekexperts!",
+                        "question": "Maak een afspeellijst van 10 nummers. Muziekgenre is: \"Blues\", de taal is \"Engels\"."
+                    },
+                    {
+                        "title": "Krijg iemands hart❤",
+                        "description": "Vind je perfecte match met onze onfeilbare flirttips voor dating-apps!",
+                        "question": "Maak een afspeellijst van 10 nummers. Muziekgenre is: \"Blues\", de taal is \"Engels\"."
+                    }
+                ]
+            },
+            {
+                "name": "Genieten",
+                "category_data": [{
+                        "title": "Sms naar Emoji",
+                        "description": "Verander woorden in emoji's",
+                        "question": "Kun jij woorden omzetten in emoji's : Lach"
+                    },
+                    {
+                        "title": "Aanbeveling voor films",
+                        "description": "Ontvang aanbevelingen over wat u moet bekijken",
+                        "question": "Kun je me alsjeblieft een film aanbevelen met een IMDM-score van 9 of hoger, mijn stemming is: Kalm, mijn favoriete filmgenre is: Komedie"
+                    },
+                    {
+                        "title": "Dronken gesprek",
+                        "description": "Chat met de dronken chatbot",
+                        "question": "Waarom ben je in een romantische bui?"
+                    }, {
+                        "title": "ASCII-kunstgenerator",
+                        "description": "Genereer een ASCII-afbeelding van een woord of tekst.",
+                        "question": "Kunt u alstublieft een ASCII-afbeelding genereren uit deze zin: Hallo"
+                    }, {
+                        "title": "Snelle generator",
+                        "description": "Genereer creatieve prompts",
+                        "question": "Genereer creatieve prompts"
+                    }, {
+                        "title": "Samenvatting van het boek",
+                        "description": "Ontvang een samenvatting van het boek",
+                        "question": "Kunt u dit boek samenvatten? De auteur van het boek is: J.K. Rowling, de naam van het boek is: Harry Potter."
+                    }, {
+                        "title": "Wachtwoord generator",
+                        "description": "Maak veilige wachtwoorden die onmogelijk te kraken zijn",
+                        "question": "Kunt u alstublieft een veilig wachtwoord maken dat onmogelijk te kraken is, het moet 12 tekens lang zijn."
+                    }, {
+                        "title": "Caloriecalculator",
+                        "description": "Calculator voor dagelijkse calorie-inname",
+                        "question": "Kunt u alstublieft mijn dagelijkse calorie-inname berekenen, mijn geslacht is: mannelijk, mijn leeftijd is: 25, mijn lengte is 170 centimeter, mijn gewicht is 70 kilogram, ik ben dagelijks licht actief."
+                    }, {
+                        "title": "Dagelijkse motivatiecitaten",
+                        "description": "Krijg je dagelijkse dosis inspiratie en positiviteit met onze zorgvuldig uitgekozen motivatiecitaten!",
+                        "question": "Schrijf me dagelijks een motivatiecitaat."
+                    }
+                ]
+            },
+            {
+                "name": "Chillen",
+                "category_data": [{
+                    "title": "Lokale attracties",
+                    "description": "Ontdek nabijgelegen bezienswaardigheden en attracties.",
+                    "question": "Stel plaatsen voor om te bezoeken in de buurt van mijn locatie. Mijn stad is: \"Las Vegas\"."
+                }]
+            },
+            {
+                "name": "Onderwijs",
+                "category_data": [{
+                    "title": "Essay schrijver",
+                    "description": "Profiteer van onze deskundige schrijfservices voor essays!",
+                    "question": "Schrijf mij een essay. Onderwerp is: \"Natuur\", doel van het essay is: \"Overtuigen\""
+                }, {
+                    "title": "Herschrijf de zin",
+                    "description": "Verbeter uw schrijven en communiceer effectiever met onze tools voor het herschrijven van zinnen!",
+                    "question": "Herschrijf de zin: \"Wat ben je aan het doen\", doel van het herschrijven is \"Vereenvoudig taal\""
+                }, {
+                    "title": "Tekst corrector",
+                    "description": "Poets je schrijven en vang elke fout op met onze deskundige tekstcorrectie!",
+                    "question": "Corrigeer de zin: \"waar ben je\""
+                }]
+            },
+            {
+                "name": "Gezondheid",
+                "category_data": [{
+                    "title": "Krijg je fitnessplan",
+                    "description": "Ontvang een persoonlijk trainingsplan op maat",
+                    "question": "Maak een fitnessplan voor mij. Mijn fitnessniveau is \"Licht trainen\", Mijn fitnessdoel is: \"Verbeteren van het cardiovasculaire uithoudingsvermogen“"
+                }]
+            },
+            {
+                "name": "Vertaling",
+                "category_data": [{
+                    "title": "Vertaling",
+                    "description": "Vertaal tekst in elke taal",
+                    "question": "Kun je alsjeblieft vertalen naar de Franse taal? Vertaal dit: \"Waar ben je\""
+                }]
+            }
+        ]
+    }
+}

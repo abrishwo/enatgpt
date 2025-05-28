@@ -1,0 +1,135 @@
+{
+    "ChatGPT": {
+        "Category": [
+            {
+                "name": "አስትሮሎጂ",
+                "category_data": [{
+                        "title": "ኒውመሮሎጂ",
+                        "description": "ኒውመሮሎጂ ቁጥርዎን እና ስምዎትን በመጠቀም የአስማት ቁጥሮችንና የተደበቁ ምስጢራዊ ኃይሎትን እንዲፈቱ ያግዝዎታል።",
+                        "question": "Can you please calculate my numerology numbers ? My name is: John Wick, my birthday is: 1995-01-01."
+                    },
+                    {
+                        "title": "የኮከብ ስምምነት",
+                        "description": "ኮከብዎ ከትዳር አጋሮት ጋር ምን ያኽል ይስማማል?",
+                        "question": "My zodiac sign is aries, my partner’s zodiac sign is taurus. Can you please calculate our zodiac compatibility and along with percentages in love and marriage?"
+                    },
+                    {
+                        "title": "ዕለታዊ ኮከብ",
+                        "description": "በፍቅር ፣በሙያ እና በሌሎች ላይ የሁሉም የዞዲያክ ምልክቶች ዕለታዊ የኮከብ ቆጠራ እና ለህይወትዎ መመሪያን ያግኙ።",
+                        "question": "My Zodiac sign is : Arise, can you please write my daily horoscope on love, career & more."
+                    }, {
+                        "title": "ሕልም ፈቺ",
+                        "description": "የሕልምህን ድብቅ ትርጉሞች ለማወቅ።",
+                        "question": "Can you explain my dream? My dream was about: entrepreneur"
+                    }, {
+                        "title": "የልጄን ጾታ ገምት",
+                        "description": "የወደ ፊት ልጅዎ ጾታ ምን ይሁን?",
+                        "question": "Can you please guess our future baby gender? Mother’s month of birth is: April, father’s month of birth is: March, conception month is: December."
+                    }
+                ]
+            },
+            {
+                "name": "ማሕበራዊ ሚዲያ",
+                "category_data": [{
+                        "title": "ማሕበራዊ ሚዲያ ጦማር",
+                        "description": "ማሕበራዊ ሚዲያዎትን በEnatGPT ጽሑፍ ያበልጽጉ",
+                        "question": "Create a post on “ Facebook “ in order to increase brand awareness. Purpose: “Ranking” Target:”No”, Tone: “ Informative “."
+                    },
+                    {
+                        "title": "የሙዝቃ ምርጫ ♬",
+                        "description": "የምርጥና ተወዳጅ ሙዝቃዎችን መረጃ!",
+                        "question": "Create a playlist of 10 songs. Music genre is : “ Blues”,langauge is “ English ”."
+                    },
+                    {
+                        "title": "አማላይ ❤",
+                        "description": "Find your perfect match with our foolproof flirting tips for dating apps!",
+                        "question": "Create a playlist of 10 songs. Music genre is : “ Blues”,langauge is “ English ”."
+                    }
+                ]
+            },
+            {
+                "name": "ፏ በል",
+                "category_data": [{
+                        "title": "ጽሑፍ ወደ Emoji",
+                        "description": "Transform words into emojis",
+                        "question": "Can you transform words into emojis : Laugh"
+                    },
+                    {
+                        "title": "የፊልም ምርጫ",
+                        "description": "Get recommendations about what you should watch",
+                        "question": "Can you please recommend me a movie with an IMDM score of 9 or higher, my mood is: Calm, my favourite movie genre is: Comedy"
+                    },
+                    {
+                        "title": "ሰካራሙ",
+                        "description": "Chat with the drunk chatbot",
+                        "question": "Why are you in romantic mood?"
+                    }, {
+                        "title": "ASCII ጥበብ",
+                        "description": "Generate an ASCII graphic from a word or text.",
+                        "question": "Can you please generate an ASCII graphics from this sentence: Hello"
+                    }, {
+                        "title": "ፕሮምፕት ጀነሬተር",
+                        "description": "Generate creative prompts",
+                        "question": "Generate creative prompts with this sentence: Hello"
+                    }, {
+                        "title": "የመጽሐፍ ማጠቃለያ",
+                        "description": "Get a summary of the book",
+                        "question": "Can you please summarize this book. Book’s author is: J. K. Rowling, Book name is: Harry potter."
+                    }, {
+                        "title": "የይለፍ ቃል ይፍጠሩ",
+                        "description": "Create secure passwords that are impossible to crack",
+                        "question": "Can you please create a secure password that is impossible to crack, it should be 12 characters length."
+                    }, {
+                        "title": "ካሎሪ ካልኩለተር",
+                        "description": "Daily Calorie Intake Calculator",
+                        "question": "Can you please calculate my daily calorie intake amount, my gender is: Male, my age is:25, my height is 170 centimeters, my weight is 70 kilograms, i am lightly active on a daily basis."
+                    }, {
+                        "title": "ዕለታዊ ጥቅሶች",
+                        "description": "Get your daily dose of inspiration and positivity with our hand picked motivation quotes!",
+                        "question": "Write me a daily motivation quote."
+                    }
+                ]
+            },
+            {
+                "name": "Hang out",
+                "category_data": [{
+                    "title": "Local attractions",
+                    "description": "Discover nearby points of interest and attractions.",
+                    "question": "Suggest places to visit near my location.My city is : “ Las Vegas “."
+                }]
+            },
+            {
+                "name": "Education",
+                "category_data": [{
+                    "title": "Essay writer",
+                    "description": "Ace with our expert essay writing services!",
+                    "question": "Write me essay. Topic is : “ Nature “ , purpose of the essay is : “ Persuade “"
+                }, {
+                    "title": "Rewrite the sentence",
+                    "description": "Elevate your writing and communicate more effectively with our sentence-rewriting tools!",
+                    "question": "Rewrite the sentence : “ What are you doing “ , purpose of the rewriting is “ Simplify language “"
+                }, {
+                    "title": "Text corrector",
+                    "description": "Polish your writing and catch every mistake with our expert text correction!",
+                    "question": "Correct the sentence : “ where are you “"
+                }]
+            },
+            {
+                "name": "Health",
+                "category_data": [{
+                    "title": "Get your fitness plan",
+                    "description": "Receive a customized personal training plan",
+                    "question": "Create a fitness plan for me. My fitness level is “ Lightly Exercising “ , My fitness goal is : “ Improve cardiovascular endurance “"
+                }]
+            },
+            {
+                "name": "Translation",
+                "category_data": [{
+                    "title": "Translation",
+                    "description": "Translate text into any langauage",
+                    "question": "Can you please translate to the French language? Translate this : “ Where are you”"
+                }]
+            }
+        ]
+    }
+}

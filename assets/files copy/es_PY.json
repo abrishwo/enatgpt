@@ -1,0 +1,135 @@
+{
+    "ChatGPT": {
+        "Category": [
+            {
+                "name": "Astrología",
+                "category_data": [{
+                        "title": "Numerología",
+                        "description": "Te ayuda a decodificar tus números mágicos y poderes ocultos usando tu número y nombre de numerología.",
+                        "question": "¿Puedes por favor calcular mis números de numerología? Mi nombre es: John Wick, mi cumpleaños es: 1995-01-01."
+                    },
+                    {
+                        "title": "Compatibilidad zodiacal",
+                        "description": "Descubra cómo usted y su pareja serán compatibles entre sí según los signos del zodiaco, junto con los porcentajes en el amor, el matrimonio, etc.",
+                        "question": "Mi signo zodiacal es aries, el signo zodiacal de mi pareja es tauro. ¿Puedes calcular nuestra compatibilidad zodiacal y junto con los porcentajes en el amor y el matrimonio?"
+                    },
+                    {
+                        "title": "Horóscopo diario",
+                        "description": "Horóscopo diario de todos los signos del zodíaco sobre amor, carrera y más, y obtén orientación para tu vida.",
+                        "question": "Mi signo zodiacal es: Levántate, ¿puedes escribir mi horóscopo diario sobre el amor, la carrera y más?"
+                    }, {
+                        "title": "Interpretación de sueños",
+                        "description": "Descubre los significados ocultos de tus sueños.",
+                        "question": "¿Puedes explicar mi sueño? Mi sueño era sobre: emprendedor"
+                    }, {
+                        "title": "Género del futuro bebé",
+                        "description": "¿Tendré un niño o una niña? (El informe no garantiza una precisión del 100% y se realiza solo con fines de entretenimiento).",
+                        "question": "¿Puedes adivinar el sexo de nuestro futuro bebé? El mes de nacimiento de la madre es: abril, el mes de nacimiento del padre es: marzo, el mes de la concepción es: diciembre."
+                    }
+                ]
+            },
+            {
+                "name": "Medios de comunicación social",
+                "category_data": [{
+                        "title": "Publicaciones en redes sociales",
+                        "description": "Impulse su presencia en línea con nuestra función de creación posterior a las redes sociales.",
+                        "question": "Cree una publicación en \"Facebook\" para aumentar el conocimiento de la marca. Finalidad: “Ranking” Target: “No”, Tono: “Informativo”."
+                    },
+                    {
+                        "title": "Recibe sugerencias de música ♬",
+                        "description": "¡Descubre tu próxima canción favorita con nuestros expertos en música!",
+                        "question": "Crea una lista de reproducción de 10 canciones. El género musical es: \"Blues\", el idioma es \"Inglés\"."
+                    },
+                    {
+                        "title": "Consigue el corazón de alguien❤",
+                        "description": "¡Encuentra tu pareja perfecta con nuestros infalibles consejos de coqueteo para aplicaciones de citas!",
+                        "question": "Crea una lista de reproducción de 10 canciones. El género musical es: \"Blues\", el idioma es \"Inglés\"."
+                    }
+                ]
+            },
+            {
+                "name": "Disfrutar",
+                "category_data": [{
+                        "title": "Texto a emoji",
+                        "description": "Transformar palabras en emojis",
+                        "question": "¿Puedes transformar palabras en emojis?: Risa"
+                    },
+                    {
+                        "title": "Recomendación de película",
+                        "description": "Obtén recomendaciones sobre lo que debes ver",
+                        "question": "¿Puede recomendarme una película con un puntaje IMDM de 9 o más? Mi estado de ánimo es: Tranquilo, mi género de película favorito es: Comedia."
+                    },
+                    {
+                        "title": "Conversación de borracho",
+                        "description": "Chatea con el chatbot borracho",
+                        "question": "¿Por qué estás de humor romántico?"
+                    }, {
+                        "title": "Generador de arte ASCII",
+                        "description": "Genere un gráfico ASCII a partir de una palabra o texto.",
+                        "question": "¿Puede generar un gráfico ASCII a partir de esta oración: Hola"
+                    }, {
+                        "title": "generador de avisos",
+                        "description": "Genera mensajes creativos",
+                        "question": "Genera indicaciones creativas con esta frase: Hola"
+                    }, {
+                        "title": "Resumen del libro",
+                        "description": "Obtener un resumen del libro.",
+                        "question": "¿Puedes por favor resumir este libro? El autor del libro es: J. K. Rowling, el nombre del libro es: Harry Potter."
+                    }, {
+                        "title": "Generador de contraseñas",
+                        "description": "Cree contraseñas seguras que sean imposibles de descifrar",
+                        "question": "¿Puede crear una contraseña segura que sea imposible de descifrar? Debe tener una longitud de 12 caracteres."
+                    }, {
+                        "title": "Calorie Calculator",
+                        "description": "Calculadora de ingesta diaria de calorías",
+                        "question": "¿Puede por favor calcular mi ingesta diaria de calorías? Mi género es: Masculino, mi edad es: 25, mi altura es de 170 centímetros, mi peso es de 70 kilogramos, soy ligeramente activo a diario."
+                    }, {
+                        "title": "Cotizaciones diarias de motivación",
+                        "description": "¡Obtenga su dosis diaria de inspiración y positividad con nuestras citas de motivación cuidadosamente seleccionadas!",
+                        "question": "Escríbeme una cita de motivación diaria."
+                    }
+                ]
+            },
+            {
+                "name": "Pasar el rato",
+                "category_data": [{
+                    "title": "Lugares de interés",
+                    "description": "Descubre puntos de interés y atracciones cercanas.",
+                    "question": "Sugerir lugares para visitar cerca de mi ubicación. Mi ciudad es: “Las Vegas”."
+                }]
+            },
+            {
+                "name": "Educación",
+                "category_data": [{
+                    "title": "escritor de ensayos",
+                    "description": "¡Excelente con nuestros servicios expertos de redacción de ensayos!",
+                    "question": "Escríbeme ensayo. El tema es: \"Naturaleza\", el propósito del ensayo es: \"Persuadir\"."
+                }, {
+                    "title": "Reescribe la oración",
+                    "description": "¡Mejore su escritura y comuníquese de manera más efectiva con nuestras herramientas de reescritura de oraciones!",
+                    "question": "Vuelva a escribir la oración: \"Qué estás haciendo\", el propósito de la reescritura es \"Simplificar el lenguaje\""
+                }, {
+                    "title": "corrector de texto",
+                    "description": "¡Pule su escritura y detecte cada error con nuestra corrección de texto experta!",
+                    "question": "Corrija la oración: \"¿dónde estás?\""
+                }]
+            },
+            {
+                "name": "Salud",
+                "category_data": [{
+                    "title": "Consigue tu plan de fitness",
+                    "description": "Recibe un plan de entrenamiento personal personalizado",
+                    "question": "Crear un plan de fitness para mí. Mi nivel de forma física es \"Ejercicio ligero\", Mi objetivo de forma física es: \"Mejorar la resistencia cardiovascular\""
+                }]
+            },
+            {
+                "name": "Traducción",
+                "category_data": [{
+                    "title": "Traducción",
+                    "description": "Traducir texto a cualquier idioma",
+                    "question": "¿Puedes por favor traducir al idioma francés? Traduce esto: \"¿Dónde estás?\""
+                }]
+            }
+        ]
+    }
+}

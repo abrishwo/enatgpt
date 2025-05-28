@@ -1,0 +1,135 @@
+{
+    "ChatGPT": {
+        "Category": [
+            {
+                "name": "Astroloji",
+                "category_data": [{
+                        "title": "Numeroloji",
+                        "description": "Nümeroloji numaranızı ve adınızı kullanarak sihirli sayılarınızı ve gizli güçlerinizi çözmenize yardımcı olur.",
+                        "question": "Lütfen numeroloji sayılarımı hesaplayabilir misiniz? Adım: John Wick, doğum günüm: 1995-01-01."
+                    },
+                    {
+                        "title": "Burç Uyumluluğu",
+                        "description": "Siz ve eşinizin burçlara göre birbirinizle nasıl uyumlu olacağınızı, aşk, evlilik vb. yüzdelerle birlikte öğrenin.",
+                        "question": "Benim burcum koç, eşimin burcu boğa. Burç uyumumuzu ve aşk ve evlilik yüzdeleriyle birlikte hesaplayabilir misiniz?"
+                    },
+                    {
+                        "title": "Günlük Burç Yorumu",
+                        "description": "Aşk, kariyer ve daha fazlası hakkında tüm zodyak işaretlerinin günlük yıldız falı ve hayatınız için rehberlik alın.",
+                        "question": "Burcum : Kalk, lütfen aşk, kariyer ve daha fazlası hakkındaki günlük burcumu yazar mısın?"
+                    }, {
+                        "title": "Rüya yorumu",
+                        "description": "Hayallerinizin gizli anlamlarını keşfedin.",
+                        "question": "Rüyamı açıklayabilir misin? Hayalim şuydu: girişimci"
+                    }, {
+                        "title": "Gelecekteki Bebeğin Cinsiyeti",
+                        "description": "Bir erkek veya bir kız çocuğum olacak mı? (Rapor %100 doğruluk garantisi vermemektedir ve sadece eğlence amaçlı hazırlanmıştır.)",
+                        "question": "Lütfen gelecekteki bebeğimizin cinsiyetini tahmin edebilir misiniz? Annenin doğum ayı: Nisan, babanın doğum ayı: Mart, gebe kalma ayı: Aralık."
+                    }
+                ]
+            },
+            {
+                "name": "Sosyal medya",
+                "category_data": [{
+                        "title": "Sosyal Medya Gönderileri",
+                        "description": "Sosyal medya oluşturma sonrası özelliğimizle çevrimiçi varlığınızı artırın.",
+                        "question": "Marka bilinirliğini artırmak için “Facebook”ta bir gönderi oluşturun. Amaç: “Sıralama” Hedef:”Hayır”, Ton: “Bilgilendirici”."
+                    },
+                    {
+                        "title": "Müzik önerileri alın ♬",
+                        "description": "Müzik uzmanlarımızla bir sonraki favori şarkınızı keşfedin!",
+                        "question": "10 şarkılık bir çalma listesi oluşturun. Müzik türü : “Blues”,dili “İngilizce” dir."
+                    },
+                    {
+                        "title": "Birinin kalbini al❤",
+                        "description": "Flört uygulamaları için kusursuz flört ipuçlarımızla mükemmel eşinizi bulun!",
+                        "question": "10 şarkılık bir çalma listesi oluşturun. Müzik türü : “Blues”,dili “İngilizce” dir."
+                    }
+                ]
+            },
+            {
+                "name": "Eğlence",
+                "category_data": [{
+                        "title": "Emoji'ye Metin",
+                        "description": "Kelimeleri emojilere dönüştürün",
+                        "question": "Kelimeleri emojiye dönüştürebilir misin : Gülmek"
+                    },
+                    {
+                        "title": "Film önerisi",
+                        "description": "İzlemeniz gerekenler hakkında öneriler alın",
+                        "question": "Bana IMDM puanı 9 ve üzeri olan bir film önerir misiniz, ruh halim: Sakin, en sevdiğim film türü: Komedi"
+                    },
+                    {
+                        "title": "sarhoş konuşma",
+                        "description": "Sarhoş chatbot ile sohbet et",
+                        "question": "Neden romantik bir ruh halindesin?"
+                    }, {
+                        "title": "ASCII Sanat Oluşturucu",
+                        "description": "Bir kelimeden veya metinden bir ASCII grafiği oluşturun.",
+                        "question": "Lütfen bu cümleden bir ASCII grafiği oluşturabilir misiniz: Merhaba"
+                    }, {
+                        "title": "İstem oluşturucu",
+                        "description": "Yaratıcı istemler oluşturun",
+                        "question": "Şu cümleyle yaratıcı istemler oluşturun: Merhaba"
+                    }, {
+                        "title": "Kitap özeti",
+                        "description": "Kitabın özetini alın",
+                        "question": "Lütfen bu kitabı özetler misiniz? Kitabın yazarı: J. K. Rowling, Kitabın adı: Harry potter."
+                    }, {
+                        "title": "Şifre Oluşturucu",
+                        "description": "Kırılması imkansız olan güvenli şifreler oluşturun",
+                        "question": "Lütfen kırılması imkansız güvenli bir şifre oluşturabilir misiniz, 12 karakter uzunluğunda olmalıdır."
+                    }, {
+                        "title": "Kalori Hesaplayıcı",
+                        "description": "Günlük Kalori Alımı Hesaplayıcısı",
+                        "question": "Günlük kalori alımımı hesaplar mısınız, cinsiyetim: Erkek, yaşım:25, boyum 170 santimetre, kilom 70 kilo, günlük olarak hafif aktifim."
+                    }, {
+                        "title": "Günlük Motivasyon Sözleri",
+                        "description": "Özenle seçilmiş motivasyon tekliflerimizle günlük ilham ve pozitiflik dozunuzu alın!",
+                        "question": "Bana günlük bir motivasyon sözü yaz."
+                    }
+                ]
+            },
+            {
+                "name": "Oyalanmak",
+                "category_data": [{
+                    "title": "Yerel turistik yerler",
+                    "description": "Yakındaki ilgi çekici yerleri ve cazibe merkezlerini keşfedin.",
+                    "question": "Konumuma yakın ziyaret edilecek yerler öner. Şehrim: \" Las Vegas \"."
+                }]
+            },
+            {
+                "name": "Eğitim",
+                "category_data": [{
+                    "title": "Deneme yazarı",
+                    "description": "Uzman makale yazma hizmetlerimizle başarılı olun!",
+                    "question": "Bana makale yaz. Konu : \" Doğa \" , makalenin amacı : \" İkna \""
+                }, {
+                    "title": "Cümleyi yeniden yaz",
+                    "description": "Cümle yeniden yazma araçlarımızla yazınızı yükseltin ve daha etkili iletişim kurun!",
+                    "question": "Cümleyi yeniden yazın: “Ne yapıyorsun”, yeniden yazmanın amacı “Dili basitleştirmek”"
+                }, {
+                    "title": "Metin düzeltici",
+                    "description": "Uzman metin düzeltmemizle yazınızı cilalayın ve her hatayı yakalayın!",
+                    "question": "Cümleyi düzeltin: \"Neredesin\""
+                }]
+            },
+            {
+                "name": "Sağlık",
+                "category_data": [{
+                    "title": "Fitness planınızı alın",
+                    "description": "Özelleştirilmiş bir kişisel eğitim planı alın",
+                    "question": "Benim için bir fitness planı oluştur. Fitness seviyem \"Hafif Egzersiz\", Fitness hedefim: \"Kardiyovasküler dayanıklılığı geliştirmek\""
+                }]
+            },
+            {
+                "name": "Tercüme",
+                "category_data": [{
+                    "title": "Tercüme",
+                    "description": "Metni herhangi bir dile çevir",
+                    "question": "Lütfen Fransızcaya çevirir misiniz? Bunu tercüme et: “Neredesin”"
+                }]
+            }
+        ]
+    }
+}

@@ -1,0 +1,135 @@
+{
+    "ChatGPT": {
+        "Category": [
+            {
+                "name": "Astrologia",
+                "category_data": [{
+                        "title": "Symbolika liczb",
+                        "description": "Pomaga rozszyfrować magiczne liczby i ukryte moce za pomocą numeru numerologicznego i imienia.",
+                        "question": "Czy możesz obliczyć moje liczby numerologiczne? Nazywam się: John Wick, moje urodziny to: 1995-01-01."
+                    },
+                    {
+                        "title": "Zgodność zodiaku",
+                        "description": "Dowiedz się, w jaki sposób ty i twój partner będziecie ze sobą kompatybilni według znaków zodiaku, wraz z procentami w miłości, małżeństwie itp.",
+                        "question": "Mój znak zodiaku to baran, znak zodiaku mojego partnera to byk. Czy możesz obliczyć naszą zgodność zodiaku i wraz z procentami w miłości i małżeństwie?"
+                    },
+                    {
+                        "title": "Dzienny Horoskop",
+                        "description": "Codzienny horoskop dla wszystkich znaków zodiaku na temat miłości, kariery i nie tylko oraz uzyskaj wskazówki dotyczące swojego życia.",
+                        "question": "Mój znak zodiaku to: Wstań, czy możesz napisać mój codzienny horoskop dotyczący miłości, kariery i nie tylko."
+                    }, {
+                        "title": "Interpretacja snu",
+                        "description": "Odkryj ukryte znaczenie swoich snów.",
+                        "question": "Czy możesz wyjaśnić mój sen? Moim marzeniem było: przedsiębiorca"
+                    }, {
+                        "title": "Przyszła płeć dziecka",
+                        "description": "Czy będę miała chłopca czy dziewczynkę? (Raport nie gwarantuje stuprocentowej dokładności i został sporządzony wyłącznie w celach rozrywkowych).",
+                        "question": "Czy potrafisz odgadnąć płeć naszego przyszłego dziecka? Miesiącem urodzenia matki jest: kwiecień, miesiącem urodzenia ojca jest: marzec, miesiącem poczęcia jest: grudzień."
+                    }
+                ]
+            },
+            {
+                "name": "Media społecznościowe",
+                "category_data": [{
+                        "title": "Posty w mediach społecznościowych",
+                        "description": "Zwiększ swoją obecność w Internecie dzięki naszej funkcji post-tworzenia w mediach społecznościowych.",
+                        "question": "Utwórz post na „Facebooku”, aby zwiększyć świadomość marki. Cel: „Ranking” Cel: „Nie”, Ton: „Informacyjny”."
+                    },
+                    {
+                        "title": "Otrzymuj sugestie muzyczne ♬",
+                        "description": "Odkryj swoją kolejną ulubioną piosenkę z naszymi ekspertami muzycznymi!",
+                        "question": "Utwórz listę odtwarzania zawierającą 10 utworów. Gatunek muzyczny to: „Blues”, język to „angielski”."
+                    },
+                    {
+                        "title": "Zdobądź czyjeś serce❤",
+                        "description": "Znajdź swoją idealną parę dzięki naszym niezawodnym wskazówkom dotyczącym flirtowania w aplikacjach randkowych!",
+                        "question": "Utwórz listę odtwarzania zawierającą 10 utworów. Gatunek muzyczny to: „Blues”, język to „angielski”."
+                    }
+                ]
+            },
+            {
+                "name": "Cieszyć się",
+                "category_data": [{
+                        "title": "Tekst do emotikonów",
+                        "description": "Zamień słowa w emotikony",
+                        "question": "Czy potrafisz zamienić słowa w emotikony : Śmiej się"
+                    },
+                    {
+                        "title": "Rekomendacja filmu",
+                        "description": "Otrzymuj rekomendacje dotyczące tego, co powinieneś obejrzeć",
+                        "question": "Czy możesz polecić mi film z oceną IMDM 9 lub wyższą, mój nastrój to: Spokojny, mój ulubiony gatunek filmowy to: Komedia"
+                    },
+                    {
+                        "title": "Pijana rozmowa",
+                        "description": "Porozmawiaj z pijanym chatbotem",
+                        "question": "Dlaczego jesteś w romantycznym nastroju?"
+                    }, {
+                        "title": "Generator grafiki ASCII",
+                        "description": "Wygeneruj grafikę ASCII ze słowa lub tekstu.",
+                        "question": "Czy możesz wygenerować grafikę ASCII z tego zdania: Cześć"
+                    }, {
+                        "title": "Generator podpowiedzi",
+                        "description": "Generuj kreatywne monity",
+                        "question": "Wygeneruj kreatywne podpowiedzi z tym zdaniem: Cześć"
+                    }, {
+                        "title": "Streszczenie książki",
+                        "description": "Pobierz streszczenie książki",
+                        "question": "Czy możesz streścić tę książkę. Autorem książki jest: J.K. Rowling, Tytuł książki to: Harry Potter."
+                    }, {
+                        "title": "Generator hasła",
+                        "description": "Twórz bezpieczne hasła, których nie da się złamać",
+                        "question": "Czy możesz utworzyć bezpieczne hasło, którego nie można złamać, powinno mieć długość 12 znaków."
+                    }, {
+                        "title": "Kalkulator kalorii",
+                        "description": "Kalkulator dziennego spożycia kalorii",
+                        "question": "Czy możesz obliczyć moje dzienne spożycie kalorii, moja płeć to: Mężczyzna, mój wiek to: 25, mój wzrost to 170 centymetrów, moja waga to 70 kilogramów, na co dzień jestem mało aktywny."
+                    }, {
+                        "title": "Codzienne cytaty motywacyjne",
+                        "description": "Zdobądź codzienną dawkę inspiracji i pozytywnego nastawienia dzięki naszym starannie dobranym cytatom motywacyjnym!",
+                        "question": "Napisz mi codzienny cytat motywacyjny."
+                    }
+                ]
+            },
+            {
+                "name": "Spędzać czas",
+                "category_data": [{
+                    "title": "Lokalne atrakcje",
+                    "description": "Odkryj pobliskie ciekawe miejsca i atrakcje.",
+                    "question": "Zaproponuj miejsca do odwiedzenia w pobliżu mojej lokalizacji.Moje miasto to: „Las Vegas”."
+                }]
+            },
+            {
+                "name": "Edukacja",
+                "category_data": [{
+                    "title": "Pisarz esejów",
+                    "description": "Ace z naszymi specjalistycznymi usługami pisania esejów!",
+                    "question": "Napisz mi esej. Temat to: „Natura”, celem eseju jest: „Przekonywanie”"
+                }, {
+                    "title": "Przepisz zdanie",
+                    "description": "Popraw swoje pisanie i skuteczniej komunikuj się dzięki naszym narzędziom do przepisywania zdań!",
+                    "question": "Przepisz zdanie: „Co robisz”, celem przepisania jest „Uprość język”"
+                }, {
+                    "title": "Korektor tekstu",
+                    "description": "Dopracuj swoje pisanie i wyłap każdy błąd dzięki naszej profesjonalnej korekcie tekstu!",
+                    "question": "Popraw zdanie: „gdzie jesteś”"
+                }]
+            },
+            {
+                "name": "Zdrowie",
+                "category_data": [{
+                    "title": "Zdobądź swój plan fitness",
+                    "description": "Otrzymaj spersonalizowany indywidualny plan treningowy",
+                    "question": "Stwórz dla mnie plan treningowy. Mój poziom sprawności to „Lekkie ćwiczenia”, Mój cel sprawnościowy to: „Poprawa wytrzymałości sercowo-naczyniowej”"
+                }]
+            },
+            {
+                "name": "Tłumaczenie",
+                "category_data": [{
+                    "title": "Tłumaczenie",
+                    "description": "Przetłumacz tekst na dowolny język",
+                    "question": "Czy możesz przetłumaczyć na język francuski? Przetłumacz to: „Gdzie jesteś”"
+                }]
+            }
+        ]
+    }
+}

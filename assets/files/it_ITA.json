@@ -1,0 +1,135 @@
+{
+    "ChatGPT": {
+        "Category": [
+            {
+                "name": "Astrologia",
+                "category_data": [{
+                        "title": "Numerologia",
+                        "description": "Ti aiuta a decodificare i tuoi numeri magici e i tuoi poteri nascosti usando il tuo numero e il tuo nome numerologico.",
+                        "question": "Puoi per favore calcolare i miei numeri numerologici? Mi chiamo: John Wick, il mio compleanno è: 1995-01-01."
+                    },
+                    {
+                        "title": "Compatibilità zodiacale",
+                        "description": "Scopri come tu e il tuo partner sarete compatibili l'uno con l'altro secondo i segni zodiacali, insieme alle percentuali in amore, matrimonio, ecc.",
+                        "question": "Il mio segno zodiacale è ariete, il segno zodiacale del mio compagno è toro. Puoi per favore calcolare la nostra compatibilità zodiacale e insieme alle percentuali in amore e matrimonio?"
+                    },
+                    {
+                        "title": "Oroscopo del Giorno",
+                        "description": "Oroscopo giornaliero di tutti i segni zodiacali su amore, carriera e altro e ottieni una guida per la tua vita.",
+                        "question": "Il mio segno zodiacale è: Alzati, puoi per favore scrivere il mio oroscopo giornaliero su amore, carriera e altro."
+                    }, {
+                        "title": "Interpretazione dei sogni",
+                        "description": "Scopri i significati nascosti dei tuoi sogni.",
+                        "question": "Puoi spiegare il mio sogno? Il mio sogno riguardava: imprenditore"
+                    }, {
+                        "title": "Futuro sesso del bambino",
+                        "description": "Avrò un maschio o una femmina? (Il report non garantisce una precisione al 100% ed è realizzato solo a scopo di intrattenimento.)",
+                        "question": "Riesci a indovinare il nostro futuro genere di bambino? Il mese di nascita della madre è: aprile, il mese di nascita del padre è: marzo, il mese del concepimento è: dicembre."
+                    }
+                ]
+            },
+            {
+                "name": "Social media",
+                "category_data": [{
+                        "title": "Post sui social media",
+                        "description": "Potenzia la tua presenza online con la nostra funzione post-creazione sui social media.",
+                        "question": "Crea un post su “Facebook” per aumentare la brand awareness. Scopo: \"Classifica\" Target: \"No\", Tono: \"Informativo\"."
+                    },
+                    {
+                        "title": "Ottieni suggerimenti musicali ♬",
+                        "description": "Scopri la tua prossima canzone preferita con i nostri esperti di musica!",
+                        "question": "Crea una playlist di 10 brani. Il genere musicale è: \"Blues\", la lingua è \"Inglese\"."
+                    },
+                    {
+                        "title": "Prendi il cuore di qualcuno❤",
+                        "description": "Trova il tuo abbinamento perfetto con i nostri consigli infallibili per flirtare con le app di appuntamenti!",
+                        "question": "Crea una playlist di 10 brani. Il genere musicale è: \"Blues\", la lingua è \"Inglese\"."
+                    }
+                ]
+            },
+            {
+                "name": "Godere",
+                "category_data": [{
+                        "title": "Testo in Emoji",
+                        "description": "Trasforma le parole in emoji",
+                        "question": "Riesci a trasformare le parole in emoji: Ridi"
+                    },
+                    {
+                        "title": "Raccomandazione di film",
+                        "description": "Ottieni consigli su cosa dovresti guardare",
+                        "question": "Potete per favore consigliarmi un film con un punteggio IMDM di 9 o superiore, il mio stato d'animo è: Calmo, il mio genere di film preferito è: Commedia"
+                    },
+                    {
+                        "title": "Conversazione ubriaca",
+                        "description": "Chatta con il chatbot ubriaco",
+                        "question": "Perché sei di umore romantico?"
+                    }, {
+                        "title": "Generatore di arte ASCII",
+                        "description": "Genera un grafico ASCII da una parola o da un testo.",
+                        "question": "Puoi per favore generare un grafico ASCII da questa frase: Hello"
+                    }, {
+                        "title": "Generatore di prompt",
+                        "description": "Genera suggerimenti creativi",
+                        "question": "Genera suggerimenti creativi con questa frase: Ciao"
+                    }, {
+                        "title": "Riassunto del libro",
+                        "description": "Ottieni un riassunto del libro",
+                        "question": "Puoi riassumere questo libro? L'autore del libro è: J. K. Rowling, il nome del libro è: Harry Potter."
+                    }, {
+                        "title": "Generatore di password",
+                        "description": "Crea password sicure impossibili da decifrare",
+                        "question": "Puoi per favore creare una password sicura che sia impossibile da decifrare, dovrebbe essere lunga 12 caratteri."
+                    }, {
+                        "title": "Calcolatore di calorie",
+                        "description": "Calcolatore dell'apporto calorico giornaliero",
+                        "question": "Puoi per favore calcolare il mio apporto calorico giornaliero, il mio sesso è: maschio, la mia età è: 25, la mia altezza è di 170 centimetri, il mio peso è di 70 chilogrammi, sono leggermente attivo su base giornaliera."
+                    }, {
+                        "title": "Citazioni di motivazione quotidiana",
+                        "description": "Ottieni la tua dose giornaliera di ispirazione e positività con le nostre citazioni motivazionali raccolte a mano!",
+                        "question": "Scrivimi una citazione di motivazione quotidiana."
+                    }
+                ]
+            },
+            {
+                "name": "Uscire",
+                "category_data": [{
+                    "title": "Attrazioni locali",
+                    "description": "Scopri i punti di interesse e le attrazioni nelle vicinanze.",
+                    "question": "Suggerisci luoghi da visitare vicino alla mia posizione. La mia città è: \"Las Vegas\"."
+                }]
+            },
+            {
+                "name": "Formazione scolastica",
+                "category_data": [{
+                    "title": "Scrittore di saggi",
+                    "description": "Asso con i nostri servizi di saggistica esperti!",
+                    "question": "Scrivimi un saggio. L'argomento è: \"Natura\", lo scopo del saggio è: \"Persuadere\""
+                }, {
+                    "title": "Riscrivi la frase",
+                    "description": "Migliora la tua scrittura e comunica in modo più efficace con i nostri strumenti di riscrittura delle frasi!",
+                    "question": "Riscrivi la frase: \"Cosa stai facendo\", lo scopo della riscrittura è \"Semplifica il linguaggio\""
+                }, {
+                    "title": "Correttore di testo",
+                    "description": "Lucida la tua scrittura e cogli ogni errore con la nostra esperta correzione del testo!",
+                    "question": "Correggi la frase: \"dove sei\""
+                }]
+            },
+            {
+                "name": "Salute",
+                "category_data": [{
+                    "title": "Ottieni il tuo piano di fitness",
+                    "description": "Ricevi un piano di allenamento personale personalizzato",
+                    "question": "Crea un piano di fitness per me. Il mio livello di forma fisica è \"Esercizio leggero\", Il mio obiettivo di forma fisica è: \"Migliora la resistenza cardiovascolare\""
+                }]
+            },
+            {
+                "name": "Traduzione",
+                "category_data": [{
+                    "title": "Traduzione",
+                    "description": "Traduci il testo in qualsiasi lingua",
+                    "question": "Potete per favore tradurre in lingua francese? Traduci questo: \"Dove sei\""
+                }]
+            }
+        ]
+    }
+}

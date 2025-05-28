@@ -1,0 +1,135 @@
+{
+    "ChatGPT": {
+        "Category": [
+            {
+                "name": "Astrologia",
+                "category_data": [{
+                        "title": "Numerologia",
+                        "description": "Ajuda você a decodificar seus números mágicos e poderes ocultos usando seu número e nome de numerologia.",
+                            "question": "Você pode, por favor, calcular meus números de numerologia? Meu nome é: John Wick, meu aniversário é: 1995-01-01."
+                    },
+                    {
+                        "title": "Compatibilidade do Zodíaco",
+                        "description": "Descubra como você e seu parceiro serão compatíveis um com o outro de acordo com os signos do zodíaco, juntamente com as porcentagens de amor, casamento, etc.",
+                        "question": "Meu signo do zodíaco é áries, o signo do zodíaco do meu parceiro é touro. Você pode, por favor, calcular a compatibilidade do nosso zodíaco e junto com as porcentagens no amor e no casamento?"
+                    },
+                    {
+                        "title": "Horóscopo Diário",
+                        "description": "Horóscopo diário de todos os signos do zodíaco sobre amor, carreira e muito mais e obtenha orientação para sua vida.",
+                        "question": "Meu signo do zodíaco é: Levante-se, por favor, escreva meu horóscopo diário sobre amor, carreira e muito mais."
+                    }, {
+                        "title": "Interpretação dos sonhos",
+                        "description": "Descubra os significados ocultos dos seus sonhos.",
+                        "question": "Você pode explicar meu sonho? Meu sonho era sobre: empresário"
+                    }, {
+                        "title": "Sexo do futuro bebê",
+                        "description": "Terei um menino ou uma menina? (O relatório não garante precisão de 100% e é feito apenas para fins de entretenimento.)",
+                        "question": "Você consegue adivinhar o sexo do nosso futuro bebê? Mês de nascimento da mãe é: abril, mês de nascimento do pai é: março, mês de concepção é: dezembro."
+                    }
+                ]
+            },
+            {
+                "name": "Mídia social",
+                "category_data": [{
+                        "title": "Postagens de mídia social",
+                        "description": "Aumente sua presença online com nosso recurso de pós-criação de mídia social.",
+                        "question": "Crie uma postagem no “Facebook” para aumentar o conhecimento da marca. Finalidade: “Ranking” Alvo:”Não”, Tom: “Informativo”."
+                    },
+                    {
+                        "title": "Receba sugestões de músicas ♬",
+                        "description": "Descubra sua próxima música favorita com nossos especialistas em música!",
+                        "question": "Crie uma lista de reprodução de 10 músicas. O gênero musical é: “blues”, o idioma é “inglês”."
+                    },
+                    {
+                        "title": "Conquiste o coração de alguém❤",
+                        "description": "Encontre o seu par perfeito com nossas dicas de paquera infalíveis para aplicativos de namoro!",
+                        "question": "Crie uma lista de reprodução de 10 músicas. O gênero musical é: “blues”, o idioma é “inglês”."
+                    }
+                ]
+            },
+            {
+                "name": "Aproveitar",
+                "category_data": [{
+                        "title": "Texto para Emoji",
+                        "description": "Transforme palavras em emojis",
+                        "question": "Você pode transformar palavras em emojis?"
+                    },
+                    {
+                        "title": "Recomendação de filme",
+                        "description": "Receba recomendações sobre o que você deve assistir",
+                        "question": "Você pode me recomendar um filme com uma pontuação IMDM de 9 ou superior, meu humor é: Calma, meu gênero de filme favorito é: Comédia"
+                    },
+                    {
+                        "title": "conversa bêbada",
+                        "description": "Bate-papo com o chatbot bêbado",
+                        "question": "Por que você está em clima romântico?"
+                    }, {
+                        "title": "Gerador de Arte ASCII",
+                        "description": "Gere um gráfico ASCII a partir de uma palavra ou texto.",
+                        "question": "Você pode, por favor, gerar um gráfico ASCII a partir desta frase: Olá"
+                    }, {
+                        "title": "Gerador de prompt",
+                        "description": "Gerar solicitações criativas",
+                        "question": "Gere prompts criativos com esta frase: Olá"
+                    }, {
+                        "title": "Resumo do livro",
+                        "description": "Obtenha um resumo do livro",
+                        "question": "Você pode, por favor, resumir este livro. A autora do livro é: J. K. Rowling, o nome do livro é: Harry potter."
+                    }, {
+                        "title": "Gerador de senhas",
+                        "description": "Crie senhas seguras impossíveis de quebrar",
+                        "question": "Você pode, por favor, criar uma senha segura que seja impossível decifrar, deve ter 12 caracteres."
+                    }, {
+                        "title": "Calculadora de calorias",
+                        "description": "Calculadora de Ingestão Diária de Calorias",
+                        "question": "Você pode, por favor, calcular minha ingestão diária de calorias, meu gênero é: Homem, minha idade é: 25, minha altura é 170 centímetros, meu peso é 70 quilos, sou levemente ativo diariamente."
+                    }, {
+                        "title": "Citações de Motivação Diárias",
+                        "description": "Obtenha sua dose diária de inspiração e positividade com nossas citações de motivação escolhidas a dedo!",
+                        "question": "Escreva-me uma citação de motivação diária."
+                    }
+                ]
+            },
+            {
+                "name": "Passar tempo junto",
+                "category_data": [{
+                    "title": "Atrações locais",
+                    "description": "Descubra pontos de interesse e atrações nas proximidades.",
+                    "question": "Sugira lugares para visitar perto da minha localização. Minha cidade é: “ Las Vegas “."
+                }]
+            },
+            {
+                "name": "Educação",
+                "category_data": [{
+                    "title": "redator",
+                    "description": "Aceite nossos serviços especializados de redação de ensaios!",
+                    "question": "Escreva-me um ensaio. Tópico é: “Natureza”, objetivo do ensaio é: “Persuadir”"
+                }, {
+                    "title": "Reescreva a frase",
+                    "description": "Eleve sua escrita e comunique-se de forma mais eficaz com nossas ferramentas de reescrita de frases!",
+                    "question": "Reescreva a frase: “O que você está fazendo?”, o objetivo da reescrita é “Simplificar a linguagem”."
+                }, {
+                    "title": "Corretor de texto",
+                    "description": "Melhore sua redação e detecte todos os erros com nossa correção de texto especializada!",
+                    "question": "Corrija a frase: “cadê você?”"
+                }]
+            },
+            {
+                "name": "Saúde",
+                "category_data": [{
+                    "title": "Obtenha seu plano de condicionamento físico",
+                    "description": "Receba um plano de treinamento pessoal personalizado",
+                    "question": "Crie um plano de condicionamento físico para mim. Meu nível de condicionamento físico é “Exercício leve“, Meu objetivo de condicionamento físico é: “Melhorar a resistência cardiovascular“"
+                }]
+            },
+            {
+                "name": "Tradução",
+                "category_data": [{
+                    "title": "Tradução",
+                    "description": "Traduzir texto para qualquer idioma",
+                    "question": "Você pode, por favor, traduzir para a língua francesa? Traduza isto: “Onde você está”"
+                }]
+            }
+        ]
+    }
+}
