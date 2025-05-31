@@ -15,7 +15,7 @@ import '../../constant/app_icon.dart';
 import '../../constant/app_assets.dart';
 import '../../modals/chat_message.dart';
 import '../../modals/message_model.dart';
-import '../../services/open_ai_api.dart';
+import 'package:chat_gpt/services/ai_service.dart'; // Changed import
 import '../../utils/app_keys.dart';
 import '../../utils/extension.dart';
 import '../../utils/shared_prefs_utils.dart';
@@ -27,11 +27,11 @@ import '../setting_pages/setting_page_controller.dart';
 import 'chat_controller.dart';
 
 import 'package:chat_gpt/screens/premium_pages/premium_screen.dart';
-import 'package:chat_gpt/utils/app_keys.dart';
+// import 'package:chat_gpt/utils/app_keys.dart'; // Already imported via ai_service or app_keys
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:flutter/services.dart';
 
-import 'package:chat_gpt/utils/extension.dart';
+// import 'package:chat_gpt/utils/extension.dart'; // Already imported
 
 
 
@@ -318,8 +318,8 @@ int _addMessage(String content, {required bool isUser}) {
       itemCount: messageList.length,
       itemBuilder: (context, index) {
         final msg = messageList[index];
-        return MessageBubble(message: msg.sentByMe ? msg.message : "hello dear", isUserMessage: msg.sentByMe);
-        
+        return MessageBubble(message: msg.sentByMe ? msg.message : msg.answer, isUserMessage: msg.sentByMe); // Used msg.answer for AI
+
       },
     );
   }
@@ -340,20 +340,30 @@ Future<void> _sendToAPI(String input) async {
   final responseIndex = _addMessage("...", isUser: false);
 
   try {
-    final chatGptApi = ChatGptApi();
+    final chatGptApi = AIService(); // Changed class
     final response = await chatGptApi.getChatResponse(input);
 
     if (response != null) {
       print("opeai: $response");
       setState(() {
-        messageList[responseIndex].answer = response;
+        // Update the placeholder message with the actual response
+        if (responseIndex >= 0 && responseIndex < messageList.length) {
+            messageList[responseIndex].answer = response;
+        }
       });
 
       _scrollToBottom();
       if (isVoiceOn) await _speak(response);
+    } else {
+        if (responseIndex >= 0 && responseIndex < messageList.length) {
+            messageList[responseIndex].answer = "Failed to get response.";
+        }
     }
   } catch (e) {
     debugPrint("Error from OpenAI: $e");
+    if (responseIndex >= 0 && responseIndex < messageList.length) {
+        messageList[responseIndex].answer = "Error: Exception occurred.";
+    }
     Get.snackbar("Error", "Failed to get a response.");
   } finally {
     setState(() => _awaitingResponse = false);
@@ -371,21 +381,33 @@ Future<void> _sendToAPI(String input) async {
       messageLimit--;
     });
     _storeMessage(messageLimit);
+    final responseIndex = _addMessage("...", isUser: false); // Add placeholder for this method too
 
     try {
       // final response = await OpenAi.sendMessage(input);
-      final chatGptApi = ChatGptApi();
+      final chatGptApi = AIService(); // Changed class
       final response = await chatGptApi.getChatResponse(input);
 
       if (response != null) {
-        _addMessage(response, isUser: false);
+         setState(() {
+            if (responseIndex >= 0 && responseIndex < messageList.length) {
+                messageList[responseIndex].answer = response;
+            }
+        });
         print("opeai: $response");
         _scrollToBottom();
 
         if (isVoiceOn) await _speak(response);
+      } else {
+        if (responseIndex >= 0 && responseIndex < messageList.length) {
+            messageList[responseIndex].answer = "Failed to get response.";
+        }
       }
     } catch (e) {
       debugPrint("Error from OpenAI: $e");
+      if (responseIndex >= 0 && responseIndex < messageList.length) {
+            messageList[responseIndex].answer = "Error: Exception occurred.";
+      }
       Get.snackbar("Error", "Failed to get a response.");
     } finally {
       setState(() => _awaitingResponse = false);

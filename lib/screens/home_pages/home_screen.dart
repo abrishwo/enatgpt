@@ -92,10 +92,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.theme.backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: appBarTitle(context),
-        backgroundColor: context.theme.backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         actions: [
           showImageGeneration == true
               ? IconButton(
@@ -168,8 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             index
                                                         ? const Color(
                                                             0xff3FB085)
-                                                        : context
-                                                            .theme.primaryColor,
+                                                        : Theme.of(context).colorScheme.primary,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             8)),
@@ -223,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   },
                                                   child: Container(
                                                     padding: const EdgeInsets.symmetric(vertical: 15),
-                                                    decoration: BoxDecoration(color: context.theme.primaryColor, borderRadius: BorderRadius.circular(8)),
+                                                    decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(8)),
                                                     child: Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [

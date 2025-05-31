@@ -16,6 +16,7 @@ void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   await MobileAds.instance.initialize();
+  await loadEnvFile();
   runApp( MyApp(chatApi: ChatApi(),));
 }
 

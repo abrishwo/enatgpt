@@ -17,7 +17,7 @@ import '../../constant/app_color.dart';
 import '../../constant/app_icon.dart';
 import '../../modals/chat_message.dart';
 import '../../modals/message_model.dart';
-import '../../services/open_ai_api.dart';
+import 'package:chat_gpt/services/ai_service.dart';
 import '../../utils/shared_prefs_utils.dart';
 import '../../widgets/app_textfield.dart';
 import '../../widgets/message_bubble.dart';
@@ -554,8 +554,8 @@ class _ChatScreenState extends State<ChatScreen> {
   dynamic chatComplete(String question) async {
     String data = "";
     try {
-      final response = await ChatGptApi().getChatResponse(question);
-      data = response;
+      final response = await AIService().getChatResponse(question);
+      data = response ?? ""; // Ensure data is not null
       setState(() {});
     } catch (e) {
       final request = ChatCompleteText(messages: [

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+Future<void> loadEnvFile() async {
+  await dotenv.load(fileName: ".env");
+}
 
 /// CHAT GPT ID
 // String openAiToken = "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";
 // String openAiToken = "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";
-String openAiToken = "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";
+// String openAiToken = "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";
+final String openAiToken = dotenv.env['OPENAI_API_KEY']!;
 /// GOOGLE ADS ID (ANDROID)
 // String bannerAndroidID = "ca-app-pub-3940256099942544/6300978111";
 // String appOpenAndroidId =  "ca-app-pub-3940256099942544/3419835294";
@@ -101,7 +107,7 @@ Widget appBarTitle(BuildContext context){
     crossAxisAlignment: CrossAxisAlignment.center,
     mainAxisAlignment: MainAxisAlignment.start,
     children:  [
-      Text("Enat",style: TextStyle(color: context.textTheme.headline1!.color,fontSize: 26,fontWeight: FontWeight.w700),),
+      Text("Enat",style: TextStyle(color: Theme.of(context).textTheme.displayLarge!.color,fontSize: 26,fontWeight: FontWeight.w700),),
       const Text("GPT",style: TextStyle(color: Color(0xff62A193),fontSize: 26,fontWeight: FontWeight.w700),),
     ],
   );
