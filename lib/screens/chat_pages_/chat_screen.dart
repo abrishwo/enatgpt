@@ -150,11 +150,11 @@ class _ChatScreenState extends State<ChatScreen> {
       child: Screenshot(
         controller: screenshotController,
         child: Scaffold(
-          backgroundColor: context.theme.backgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background, // Changed
           appBar: AppBar(
             centerTitle: true,
             title: appBarTitle(context),
-            backgroundColor: context.theme.backgroundColor,
+            backgroundColor: Theme.of(context).colorScheme.background, // Changed
             elevation: 0,
             actions: [
               adsOff == true
@@ -252,7 +252,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 },
                 icon: Icon(
                   Icons.arrow_back_rounded,
-                  color: context.textTheme.headline1!.color,
+                  color: Theme.of(context).textTheme.displayLarge!.color, // Changed
                 )),
           ),
 
@@ -278,27 +278,6 @@ class _ChatScreenState extends State<ChatScreen> {
               // premiumScreenController.isPremium == true || adsOff == true  ? Container() :  adContainer,
             ],
           ),
-          // body: Column(
-          //   children: [
-          //     Expanded(
-          //       child: ListView(
-          //         children: [
-          //           ..._messages.map(
-          //                 (msg) => MessageBubble(
-          //               content: msg.content,
-          //               isUserMessage: msg.isUserMessage,
-          //             ),
-          //
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //     MessageComposer(
-          //       onSubmitted: _onSubmitted,
-          //       awaitingResponse: _awaitingResponse,
-          //     ),
-          //   ],
-          // ),
         ),
       ),
     );
@@ -309,7 +288,7 @@ class _ChatScreenState extends State<ChatScreen> {
         height: 55,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: context.isDarkMode == false
+          color: Theme.of(context).brightness == Brightness.light
               ? const Color(0xffEDEDED)
               : Colors.white,
         ),
@@ -333,36 +312,6 @@ class _ChatScreenState extends State<ChatScreen> {
                   sendMessageToAPI(question);
                   setState(() {});
                   messageController.clear();
-                  // downScroll();
-                  // await getLocalData();
-                  // await flutterTts.stop();
-                  // messageLimit == -1 ? null :  messageLimit--;
-                  // setState(() {});
-                  // storeMessage(messageLimit);
-                  //
-                  //   hideKeyboard(context);
-                  //
-                  //
-                  //   //String question = messageController.text.toString();
-                  //   String question = messageController.text.toString();
-                  //   if (question.isEmpty) return;
-                  //   addMessageToMessageList(question, true);
-                  //   sendMessageToAPI(question);
-                  //   setState(() {});
-                  //   messageController.clear();
-                  //
-                  //
-                  //
-                  //     hideKeyboard(context);
-                  //    // String question = messageController.text.toString();
-                  //     String question = messageController.text.toString();
-                  //
-                  //
-                  //     if (question.isEmpty) return;
-                  //     addMessageToMessageList(question, true);
-                  //     sendMessageToAPI(question);
-                  //     setState(() {});
-                  //     messageController.clear();
                 },
                 icon: const Icon(
                   Icons.send,
@@ -422,7 +371,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                           bottomRight: Radius.circular(20)),
                                   color: messageList[index].sentByMe
                                       ? AppColor.greenColor
-                                      : context.theme.primaryColor,
+                                      : Theme.of(context).colorScheme.primary, // Changed
                                 ),
                                 padding: const EdgeInsets.all(10),
                                 child: messageList[index].sentByMe
@@ -490,23 +439,6 @@ class _ChatScreenState extends State<ChatScreen> {
             reverse: true,
             itemCount: messageList.length,
           ),
-          // Expanded(
-          //   child: ListView(
-          //     children: [
-          //       ..._messages.map(
-          //             (msg) => MessageBubble(
-          //           content: msg.content,
-          //           isUserMessage: msg.isUserMessage,
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // MessageComposer(
-          //   onSubmitted: _onSubmitted,
-          //   awaitingResponse: _awaitingResponse,
-          // ),
-
           if (inProgress)
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -526,7 +458,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20),
                           bottomRight: Radius.circular(20)),
-                      color: context.theme.primaryColor,
+                      color: Theme.of(context).colorScheme.primary, // Changed
                     ),
                     padding: const EdgeInsets.all(8),
                     child: Row(
@@ -542,8 +474,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 Container(),
               ],
             ),
-
-          // 100.0.addHSpace(),
         ],
       ),
     ).marginOnly(bottom: 120);
@@ -554,19 +484,24 @@ class _ChatScreenState extends State<ChatScreen> {
   dynamic chatComplete(String question) async {
     String data = "";
     try {
-      final response = await AIService().getChatResponse(question);
-      data = response ?? ""; // Ensure data is not null
+      final response = await AIService().getChatResponse(question); // Assuming this uses Gemini now or is updated accordingly
+      data = response ?? "";
       setState(() {});
     } catch (e) {
+      // Fallback or alternative OpenAI call
       final request = ChatCompleteText(messages: [
-        // Map.of({"role": "user", "content": question.trim()})
+         Messages(role: Role.user, content: question.trim())
       ], maxToken: token,
-          model: Gpt4AModel() //Gpt4()
+          model: Gpt4ChatModel()
       );
-      // model: Gpt4AModel());
-      final response = await openAI.onChatCompletion(request: request);
-      for (var element in response!.choices) {
-        data = element.message?.content.toString() ?? "";
+      try {
+        final response = await openAI.onChatCompletion(request: request);
+        for (var element in response!.choices) {
+          data = element.message?.content.toString() ?? "";
+        }
+      } catch (openAiError) {
+        print("OpenAI fallback failed: $openAiError");
+        data = "Error: Both AI services failed.";
       }
     }
     return data;
@@ -580,9 +515,13 @@ class _ChatScreenState extends State<ChatScreen> {
     String day = DateTime.now().day.toString();
     String month = DateTime.now().month.toString();
     String year = DateTime.now().year.toString();
+    String answer = "Failed to get response please try again"; // Default
     try {
-      String answer = await chatComplete(question);
-      await SharedPrefsUtils.storeChat(
+      answer = await chatComplete(question);
+    } catch (e) {
+      print("sendMessageToAPI Error: $e");
+    } finally {
+       await SharedPrefsUtils.storeChat(
           chat: messageController.text.isEmpty
               ? widget.message
               : messageController.text,
@@ -590,33 +529,18 @@ class _ChatScreenState extends State<ChatScreen> {
           dateTime: "$day/$month/$year",
           answer: answer);
       addMessageToMessageList(answer, false);
-      isVoiceOn == true ? _speak(answer) : null;
-      setState(() {});
-      Future.delayed(Duration(seconds: 1), () {
-        downScroll();
+      if (isVoiceOn == true && answer.isNotEmpty && !answer.contains("Error:")) {
+         _speak(answer);
+      } else if (isVoiceOn == true && (answer.isEmpty || answer.contains("Error:"))) {
+        _speak("Failed to get response please try again");
+      }
+      setState(() {
+         inProgress = false;
       });
-    } catch (e) {
-      await SharedPrefsUtils.storeChat(
-          chat: messageController.text.isEmpty
-              ? widget.message
-              : messageController.text,
-          sentByMe: false,
-          dateTime: "$day/$month/$year",
-          answer: 'Failed to get response please try again');
-      addMessageToMessageList("Failed to get response please try again", false);
-      isVoiceOn == true
-          ? _speak("Failed to get response please try again")
-          : null;
-      setState(() {});
       Future.delayed(Duration(seconds: 1), () {
         downScroll();
       });
     }
-
-    setState(() {
-      inProgress = false;
-    });
-    // downScroll();
   }
 
   void addMessageToMessageList(String message, bool sentByMe) {
@@ -628,10 +552,12 @@ class _ChatScreenState extends State<ChatScreen> {
       messageList.insert(
           0,
           MessageModel(
-              message: message,
+              message: sentByMe ? message : "", // User message goes into 'message'
+              answer: sentByMe ? "" : message,   // AI answer goes into 'answer'
               sentByMe: sentByMe,
-              dateTime: "$day/$month/$year",
-              answer: message));
+              dateTime: "$day/$month/$year"
+              // answer: message // This was likely an error, AI response should be 'answer'
+              ));
     });
   }
 

@@ -8,15 +8,15 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../constant/app_color.dart';
+// import '../../constant/app_color.dart'; // Likely unused if colors are from theme
 import '../../constant/app_icon.dart';
 import '../../modals/message_model.dart';
-import '../../theme/theme_services.dart';
+// import '../../theme/theme_services.dart'; // Likely unused
 import '../../utils/app_keys.dart';
 import '../../utils/shared_prefs_utils.dart';
 import '../history_chat_view_screen/history_chat_view_screen.dart';
 import '../home_pages/home_screen.dart';
-import '../premium_pages/premium_screen_controller.dart';
+// import '../premium_pages/premium_screen_controller.dart'; // Unused
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({Key? key}) : super(key: key);
@@ -27,17 +27,13 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
 
-
-  //final premiumScreenController = Get.put(PremiumScreenController());
-
   Future<void> refresh() async {
     await  SharedPrefsUtils.getChat();
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     refresh();
   }
@@ -46,8 +42,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     final BannerAd myBanner = BannerAd(
       adUnitId: Platform.isAndroid ? bannerAndroidID : bannerIOSID,
       size: AdSize.banner,
@@ -60,9 +54,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
       alignment: Alignment.center,
       width: myBanner.size.width.toDouble(),
       height: myBanner.size.height.toDouble(),
-      child: adWidget, // myBanner.size.height.toDouble(),
+      child: adWidget,
     );
-
 
     return WillPopScope(
       onWillPop: () async {
@@ -70,12 +63,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
         return true;
       },
       child: Scaffold(
-        backgroundColor: context.theme.backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background, // Changed
         appBar: AppBar(
           elevation: 0,
           leading: IconButton(onPressed: (){
             Get.offAll(const HomeScreen(),transition: Transition.leftToRight);
-          }, icon: Icon(Icons.arrow_back_outlined,color: context.textTheme.headline1!.color,),),
+          }, icon: Icon(Icons.arrow_back_outlined,color: Theme.of(context).textTheme.displayLarge?.color,),), // Changed
             actions: [
               IconButton(
                 onPressed: (){
@@ -88,17 +81,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 icon: AppIcon.deleteIcon(context),
               )
             ],
-            backgroundColor: context.theme.backgroundColor, centerTitle: true,
-            // leading: IconButton(
-            // onPressed: (){
-            //   Get.offAll(
-            //       const HomeScreen(),
-            //       transition: Transition.leftToRight);
-            //   }, icon: const Icon(Icons.arrow_back_rounded)),`
-            title:  Text("history".tr, style: TextStyle(color: context.textTheme.headline1!.color,fontWeight: FontWeight.w500))),
-
-
-
+            backgroundColor: Theme.of(context).colorScheme.background, // Changed
+            centerTitle: true,
+            title:  Text("history".tr, style: TextStyle(color: Theme.of(context).textTheme.displayLarge?.color,fontWeight: FontWeight.w500))), // Changed
         body: Stack(
           alignment: Alignment.topCenter,
           children: [
@@ -107,7 +92,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             loading == true
                 ?
             const Center(child: CircularProgressIndicator(),) :
-             Center(child: Text("noData".tr,style: TextStyle(color: context.textTheme.headline1!.color)))
+             Center(child: Text("noData".tr,style: TextStyle(color: Theme.of(context).textTheme.displayLarge?.color))) // Changed
                 :
             SingleChildScrollView(
               child: Column(
@@ -127,16 +112,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           child: Container(
                             height: 80,
                             width: double.infinity,
-                            decoration: BoxDecoration(color: context.theme.primaryColor,borderRadius: BorderRadius.circular(14)),
+                            decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary,borderRadius: BorderRadius.circular(14)), // Changed
                             child: Column(
                               children: [
                                 10.0.addHSpace(),
                                 Row(
                                     children: [
-                                      Container(height: 30, width: 30, decoration: BoxDecoration(color: context.theme.primaryColor, borderRadius: BorderRadius.circular(7)), child: Center(child: AppIcon.chatIcon())),
+                                      Container(height: 30, width: 30, decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, borderRadius: BorderRadius.circular(7)), child: Center(child: AppIcon.chatIcon())), // Changed
                                       7.0.addWSpace(),
-                                      Expanded(child: Text(historyList[index].answer,style: TextStyle(fontSize: 15,color: context.textTheme.headline6!.color),maxLines: 2,)),
-                                      // const Spacer(),
+                                      Expanded(child: Text(historyList[index].answer,style: TextStyle(fontSize: 15,color: Theme.of(context).textTheme.titleMedium?.color),maxLines: 2,)), // Changed headline6 to titleMedium
                                       IconButton(
                                           onPressed: (){
                                             SharedPrefsUtils.removeChat(historyList[index].id);
@@ -159,16 +143,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ],
               ),
             ),
-
-
-
             Column(
               children: [
                 const Spacer(),
                 adContainer,
               ],
             )
-
           ],
         )
       ),
@@ -181,12 +161,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('doYouDelete'.tr,style: TextStyle(color: context.textTheme.headline1!.color),),
+          title: Text('doYouDelete'.tr,style: TextStyle(color: Theme.of(context).textTheme.displayLarge?.color),), // Changed
           content: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 Text('areYouConfirm'.tr,style: TextStyle(color: context.textTheme.headline1!.color)),
+                 Text('areYouConfirm'.tr,style: TextStyle(color: Theme.of(context).textTheme.displayLarge?.color)), // Changed
               ],
             ),
           ),
@@ -198,8 +178,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   SharedPrefsUtils.removeChat(element.id);
                 });
                 refresh();
-                // studentList.removeAt(index);
-                setState(() {});
+                if (mounted) setState(() {});
                 Get.back();
               },
             ),
@@ -214,8 +193,4 @@ class _HistoryScreenState extends State<HistoryScreen> {
       },
     );
   }
-
-
-
-
 }

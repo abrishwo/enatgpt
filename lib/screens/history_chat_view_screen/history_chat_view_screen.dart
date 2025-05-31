@@ -117,7 +117,7 @@ class _HistoryChatViewScreenState extends State<HistoryChatViewScreen> {
             ),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: isMe ? AppColor.greenColor : context.theme.primaryColor,
+              color: isMe ? AppColor.greenColor : Theme.of(context).colorScheme.primary, // Changed
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
@@ -174,14 +174,14 @@ class _HistoryChatViewScreenState extends State<HistoryChatViewScreen> {
         return true;
       },
       child: Scaffold(
-        backgroundColor: context.theme.backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background, // Changed
         appBar: AppBar(
-          backgroundColor: context.theme.backgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background, // Changed
           elevation: 0,
           centerTitle: true,
           title: appBarTitle(context).marginOnly(left: 50),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: context.textTheme.headline1?.color),
+            icon: Icon(Icons.arrow_back, color: Theme.of(context).textTheme.displayLarge?.color), // Changed
             onPressed: () => Get.offAll(widget.historyPage ? const HistoryScreen() : const HomeScreen()),
           ),
           actions: [

@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import 'package:chat_gpt/constant/app_color.dart';
-import 'package:chat_gpt/screens/premium_pages/premium_screen_controller.dart';
+// import 'package:chat_gpt/constant/app_color.dart'; // Unused
+// import 'package:chat_gpt/screens/premium_pages/premium_screen_controller.dart'; // Unused
 import 'package:chat_gpt/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-import '../../theme/theme_services.dart';
+// import '../../theme/theme_services.dart'; // Unused
 import '../../utils/app_keys.dart';
 import 'lenguage_screen_controller.dart';
 
@@ -17,7 +17,6 @@ class LanguageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LanguageScreenController languageScreenController = Get.put(LanguageScreenController());
-    //PremiumScreenController premiumScreenController = Get.put(PremiumScreenController());
 
     updateLanguage(Locale locale){
       Get.updateLocale(locale);
@@ -107,20 +106,20 @@ class LanguageScreen extends StatelessWidget {
       alignment: Alignment.center,
       width: myBanner.size.width.toDouble(),
       height: myBanner.size.height.toDouble(),
-      child: adWidget, // myBanner.size.height.toDouble(),
+      child: adWidget,
     );
 
     return Scaffold(
-      backgroundColor: context.theme.backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background, // Changed
       appBar: AppBar(
-        backgroundColor: context.theme.backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background, // Changed
         elevation: 0,
         centerTitle: true,
-        title:  Text("language".tr, style: TextStyle(color: context.textTheme.headline1!.color)),
+        title:  Text("language".tr, style: TextStyle(color: Theme.of(context).textTheme.displayLarge?.color)), // Changed
         leading: IconButton(
           onPressed: (){
            Get.back();
-        }, icon: Icon(Icons.arrow_back_outlined,color: context.textTheme.headline1!.color,)),
+        }, icon: Icon(Icons.arrow_back_outlined,color: Theme.of(context).textTheme.displayLarge?.color,)), // Changed
       ),
 
 
@@ -130,7 +129,7 @@ class LanguageScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
-                color: context.theme.primaryColor,
+                color: Theme.of(context).colorScheme.primary, // Changed
                 borderRadius: BorderRadius.circular(15)
             ),
             child: ListView.builder(
@@ -154,7 +153,7 @@ class LanguageScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   languageList[index],
-                                  style: const TextStyle(color: Colors.white),),
+                                  style: const TextStyle(color: Colors.white),), // Assuming white is desired on primary
                                 const Spacer(),
                                 languageScreenController.selectedIndex.value ==
                                     index
@@ -172,13 +171,10 @@ class LanguageScreen extends StatelessWidget {
                 }),
           ).marginOnly(left: 20,right: 20,top: 10,bottom: 55),
 
-          //premiumScreenController.isPremium == true || adsOff == true  ? Container() : adContainer
-
-
+          // adContainer, // Logic for showing ads might need review based on premium status
         ],
       ),
 
     );
   }
 }
-

@@ -15,7 +15,7 @@ import '../../constant/app_icon.dart';
 import '../../constant/app_assets.dart';
 import '../../modals/chat_message.dart';
 import '../../modals/message_model.dart';
-import 'package:chat_gpt/services/ai_service.dart'; // Changed import
+import 'package:chat_gpt/services/ai_service.dart';
 import '../../utils/app_keys.dart';
 import '../../utils/extension.dart';
 import '../../utils/shared_prefs_utils.dart';
@@ -130,10 +130,6 @@ int _addMessage(String content, {required bool isUser}) {
     });
   }
 
-  // Future<void> _sendToAPI(String message) async {
-    // TODO: implement OpenAI logic
-  // }
-
   Future<void> _speak(String value) async {
     await flutterTts.setLanguage("en-US");
     await flutterTts.setPitch(1);
@@ -185,7 +181,7 @@ int _addMessage(String content, {required bool isUser}) {
       child: Screenshot(
         controller: screenshotController,
         child: Scaffold(
-          backgroundColor: context.theme.backgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background, // Changed
           appBar: _buildAppBar(context),
           body: Stack(
             alignment: Alignment.bottomCenter,
@@ -211,11 +207,11 @@ int _addMessage(String content, {required bool isUser}) {
     return AppBar(
       centerTitle: true,
       title: appBarTitle(context),
-      backgroundColor: context.theme.backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background, // Changed
       elevation: 0,
       leading: IconButton(
         onPressed: () => Get.offAll(const HomeScreen(), transition: Transition.rightToLeft),
-        icon: Icon(Icons.arrow_back_rounded, color: context.textTheme.headline1?.color),
+        icon: Icon(Icons.arrow_back_rounded, color: Theme.of(context).textTheme.displayLarge?.color), // Changed
       ),
       actions: [
         _buildMessageCounterButton(context),
@@ -225,22 +221,14 @@ int _addMessage(String content, {required bool isUser}) {
     );
   }
 
-  // PART 2 will continue with:
-  // - _buildMessageCounterButton()
-  // - _buildVoiceToggleButton()
-  // - _buildScreenshotButton()
-  // - _buildSendMessageBox()
-  // - _buildMessageList()
-  // - and anything remaining such as OpenAI response handler
-
   Widget _buildMessageCounterButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 12.0),
       child: Chip(
-        backgroundColor: AppColor.primaryColor,
+        backgroundColor: AppColor.primaryColor, // This might need to be Theme.of(context).colorScheme.primaryContainer or similar
         label: Text(
           "$messageLimit left",
-          style: context.textTheme.caption?.copyWith(color: Colors.white),
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.white), // Changed from caption
         ),
       ),
     );
@@ -279,7 +267,8 @@ int _addMessage(String content, {required bool isUser}) {
 
   Widget _buildSendMessageBox(BuildContext context) {
     return Container(
-      color: context.theme.cardColor,
+      // color: context.theme.cardColor, // This was an error before, cardColor is not on ThemeData directly
+      color: Theme.of(context).cardColor, // Correct way to access cardColor
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
       child: SafeArea(
         child: Row(
@@ -293,7 +282,7 @@ int _addMessage(String content, {required bool isUser}) {
             const SizedBox(width: 10),
             IconButton(
               onPressed: _awaitingResponse ? null : _onSendPressed,
-              icon: Icon(Icons.send, color: AppColor.primaryColor),
+              icon: Icon(Icons.send, color: Theme.of(context).colorScheme.primary), // Changed
             ),
           ],
         ),
@@ -318,7 +307,8 @@ int _addMessage(String content, {required bool isUser}) {
       itemCount: messageList.length,
       itemBuilder: (context, index) {
         final msg = messageList[index];
-        return MessageBubble(message: msg.sentByMe ? msg.message : msg.answer, isUserMessage: msg.sentByMe); // Used msg.answer for AI
+        // Assuming MessageBubble is updated or uses standard Material widgets that adapt to Theme
+        return MessageBubble(message: msg.sentByMe ? msg.message : msg.answer, isUserMessage: msg.sentByMe);
 
       },
     );
@@ -336,17 +326,15 @@ Future<void> _sendToAPI(String input) async {
   });
   _storeMessage(messageLimit);
 
-  // Add placeholder and get its index
   final responseIndex = _addMessage("...", isUser: false);
 
   try {
-    final chatGptApi = AIService(); // Changed class
-    final response = await chatGptApi.getChatResponse(input);
+    final chatGptApi = AIService();
+    final response = await chatGptApi.getChatResponse(input); // Assuming getChatResponse is the desired OpenAI method here
 
     if (response != null) {
       print("opeai: $response");
       setState(() {
-        // Update the placeholder message with the actual response
         if (responseIndex >= 0 && responseIndex < messageList.length) {
             messageList[responseIndex].answer = response;
         }
@@ -381,12 +369,11 @@ Future<void> _sendToAPI(String input) async {
       messageLimit--;
     });
     _storeMessage(messageLimit);
-    final responseIndex = _addMessage("...", isUser: false); // Add placeholder for this method too
+    final responseIndex = _addMessage("...", isUser: false);
 
     try {
-      // final response = await OpenAi.sendMessage(input);
-      final chatGptApi = AIService(); // Changed class
-      final response = await chatGptApi.getChatResponse(input);
+      final chatGptApi = AIService();
+      final response = await chatGptApi.getChatResponse(input); // Assuming getChatResponse is the desired OpenAI method here
 
       if (response != null) {
          setState(() {
