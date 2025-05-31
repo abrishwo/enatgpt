@@ -1,5 +1,5 @@
-import 'package:chat_gpt/screens/demo/chat_api.dart';
-import 'package:chat_gpt/screens/demo/chat_page.dart';
+// import 'package:chat_gpt/screens/demo/chat_api.dart'; // Removed
+// import 'package:chat_gpt/screens/demo/chat_page.dart'; // Removed
 import 'package:chat_gpt/screens/home_pages/home_screen.dart';
 import 'package:chat_gpt/screens/lenguage_pages/lenguage_screen_controller.dart';
 import 'package:chat_gpt/theme/app_theme.dart';
@@ -17,14 +17,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MobileAds.instance.initialize();
   await loadEnvFile();
-  runApp( MyApp(chatApi: ChatApi(),));
+  runApp(const MyApp()); // Changed: Removed chatApi parameter
 }
 
 class MyApp extends StatelessWidget {
 
-  const MyApp({required this.chatApi, super.key});
+  const MyApp({super.key}); // Changed: Removed chatApi parameter
 
-  final ChatApi chatApi;
+  // final ChatApi chatApi; // Removed
   @override
   Widget build(BuildContext context) {
     Get.put(LanguageScreenController());
@@ -35,14 +35,8 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: isLightMode == true && isDarkMode == true ? ThemeServices().theme : isDarkMode == true ? ThemeMode.dark : isLightMode == true ? ThemeMode.light : ThemeMode.dark,
-     // home: ChatPage(chatApi: chatApi),
-      home: HomeScreen(),
+     // home: ChatPage(chatApi: chatApi), // Logic using ChatPage and chatApi was already commented out
+      home: const HomeScreen(), // Ensured HomeScreen is const if possible
     );
   }
 }
-
-
-
-
-
-

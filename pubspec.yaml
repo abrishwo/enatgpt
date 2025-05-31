@@ -40,8 +40,8 @@ dependencies:
 
   get: ^4.6.5
   flutter_svg: ^1.1.6
-  chat_gpt_sdk: ^2.2.8
-#  chat_gpt_sdk: ^3.1.4
+#  chat_gpt_sdk: ^2.2.8 # Removed
+#  chat_gpt_sdk: ^3.1.4 # Removed
   flutter_tts: ^3.6.3
   shared_preferences: ^2.0.18
   lottie: ^2.3.0
@@ -59,8 +59,8 @@ dependencies:
   cached_network_image: ^3.2.3
   in_app_purchase: ^3.1.5
   markdown_widget: ^2.0.0+1
-#  dart_openai: ^1.8.0
-  dart_openai: ^5.1.0
+#  dart_openai: ^1.8.0 # Removed
+#  dart_openai: ^5.1.0 # Removed
   path_provider: ^2.1.4
 
 

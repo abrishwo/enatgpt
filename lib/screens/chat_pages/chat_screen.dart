@@ -1,7 +1,7 @@
 // ignore_for_file: unrelated_type_equality_checks, use_build_context_synchronously
-import 'package:chat_gpt/screens/premium_pages/premium_screen.dart';
+// import 'package:chat_gpt/screens/premium_pages/premium_screen.dart'; // Unused
 import 'package:chat_gpt/utils/app_keys.dart';
-import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
+// import 'package:chat_gpt_sdk/chat_gpt_sdk.dart'; // Removed
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,12 +20,12 @@ import '../../modals/message_model.dart';
 import 'package:chat_gpt/services/ai_service.dart';
 import '../../utils/shared_prefs_utils.dart';
 import '../../widgets/app_textfield.dart';
-import '../../widgets/message_bubble.dart';
-import '../../widgets/message_composer.dart';
+// import '../../widgets/message_bubble.dart'; // Unused
+// import '../../widgets/message_composer.dart'; // Unused
 import '../home_pages/home_screen.dart';
 import '../home_pages/home_screen_controller.dart';
-import '../premium_pages/premium_screen_controller.dart';
-import '../setting_pages/setting_page_controller.dart';
+// import '../premium_pages/premium_screen_controller.dart'; // Unused
+// import '../setting_pages/setting_page_controller.dart'; // Unused
 import 'chat_controller.dart';
 import 'dart:io';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -48,8 +48,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   ScreenshotController screenshotController = ScreenshotController();
   HomeScreenController homeScreenController = HomeScreenController();
-  //PremiumScreenController premiumScreenController = Get.put(PremiumScreenController());
   int messageLimit = maxMessageLimit;
+  bool isVoiceOn = voiceOff; // Added field, initialized with voiceOff from app_keys
 
   final _messages = <ChatMessage>[
     ChatMessage('Hello, how can I help?', false),
@@ -62,7 +62,7 @@ class _ChatScreenState extends State<ChatScreen> {
     messageLimit = prefs.getInt('messageLimit') ?? maxMessageLimit;
     isVoiceOn = prefs.getBool('voice') ?? voiceOff;
     print('MessageLimit -----> $messageLimit');
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   storeMessage(int value) async {
@@ -75,20 +75,15 @@ class _ChatScreenState extends State<ChatScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('voice', value);
     isVoiceOn = prefs.getBool('voice') ?? voiceOff;
-    setState(() {});
+    if (mounted) setState(() {});
   }
-
-
-
 
   @override
   void initState() {
-
+    super.initState();
     getLocalData();
     addMessageToMessageList(widget.message,true);
     sendMessageToAPI(widget.message);
-    // TODO: implement initState
-    super.initState();
   }
 
   final FlutterTts flutterTts = FlutterTts();
@@ -98,15 +93,6 @@ class _ChatScreenState extends State<ChatScreen> {
   TextEditingController messageController = TextEditingController();
   List<MessageModel> messageList = [];
   bool inProgress = true;
-
-  final openAI = OpenAI.instance.build(
-        token: openAiToken,
-        baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 12),
-        connectTimeout: const Duration(seconds: 12),
-        sendTimeout: const Duration(seconds: 12),
-      ),
-      //isLog: true,
-  );
 
   _speak(String value) async{
     await flutterTts.setLanguage("en-US");
@@ -122,7 +108,6 @@ class _ChatScreenState extends State<ChatScreen> {
     super.dispose();
   }
 
-  // ScrollController scrollController =  ScrollController();
   final scrollController = ScrollController();
 
 
@@ -146,13 +131,6 @@ class _ChatScreenState extends State<ChatScreen> {
       listener: const BannerAdListener(),
     );
     myBanner.load();
-    final AdWidget adWidget = AdWidget(ad: myBanner);
-    final Container adContainer = Container(
-      alignment: Alignment.center,
-      width: myBanner.size.width.toDouble(),
-      height: myBanner.size.height.toDouble(),
-      child: adWidget, // myBanner.size.height.toDouble(),
-    );
 
     return WillPopScope(
       onWillPop: () async {
@@ -162,11 +140,11 @@ class _ChatScreenState extends State<ChatScreen> {
       child: Screenshot(
         controller: screenshotController,
         child: Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.background, // Changed
+          backgroundColor: Theme.of(context).colorScheme.background,
           appBar: AppBar(
             centerTitle: true,
             title: appBarTitle(context),
-            backgroundColor: Theme.of(context).colorScheme.background, // Changed
+            backgroundColor: Theme.of(context).colorScheme.background,
             elevation: 0,
             actions: [
               adsOff == true  ? Container() : GestureDetector(
@@ -213,11 +191,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 onPressed: () async {
                   isVoiceOn = !isVoiceOn;
                   await storeVoice(isVoiceOn);
-                  getLocalData();
-                  setState(() {});
                   await flutterTts.stop();
-                  isVoiceOn == true ? showToast(text: "voiceIsOn".tr) :  showToast(text: "voiceIsOff".tr);
-                  setState(() {});
+                  showToast(text: (isVoiceOn ? "voiceIsOn" : "voiceIsOff").tr);
                 },
                 icon: isVoiceOn == false ? AppIcon.speakerOffIcon(context) : AppIcon.speakerIcon(context),
               ),
@@ -228,7 +203,6 @@ class _ChatScreenState extends State<ChatScreen> {
                     final directory = await getApplicationDocumentsDirectory();
                     final imagePath = await File('${directory.path}/image.png').create();
                     await imagePath.writeAsBytes(image);
-                    /// Share Plugin
                     await Share.shareFiles([imagePath.path]);
                   }
                 });
@@ -240,7 +214,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 onPressed: (){
                   Get.offAll(const HomeScreen(), transition: Transition.rightToLeft);
                  },
-                icon: Icon(Icons.arrow_back_rounded,color: Theme.of(context).textTheme.displayLarge!.color,)), // Changed
+                icon: Icon(Icons.arrow_back_rounded,color: Theme.of(context).textTheme.displayLarge!.color,)),
           ),
 
           body: Stack(
@@ -262,7 +236,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 ],
               ),
               buildSendWidget(),
-              // premiumScreenController.isPremium == true || adsOff == true  ? Container() :  adContainer,
             ],
           ),
         ),
@@ -292,11 +265,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 onPressed: () async {
                   await flutterTts.stop();
                   hideKeyboard(context);
-                  String question = messageController.text.toString() ?? "Hello";
+                  String question = messageController.text;
                   if (question.isEmpty) return;
                   addMessageToMessageList(question, true);
                   sendMessageToAPI(question);
-                  setState(() {});
                   messageController.clear();
                 },
                 icon: const Icon(Icons.send,color: Color(0xffABAABA),))
@@ -356,7 +328,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               const BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20),bottomLeft: Radius.circular(20))
                                    :
                               const BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20),bottomRight: Radius.circular(20)),
-                              color: messageList[index].sentByMe ? AppColor.greenColor : Theme.of(context).colorScheme.primary,), // Changed
+                              color: messageList[index].sentByMe ? AppColor.greenColor : Theme.of(context).colorScheme.primary,),
                                     padding: const EdgeInsets.all(10),
                                     child:  messageList[index].sentByMe
                                 ?
@@ -370,7 +342,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 :
                             Column(
                               children: [
-                                Text(messageList[index].answer, style: const TextStyle(fontSize: 16, color: Colors.white,)), // Used answer
+                                Text(messageList[index].answer, style: const TextStyle(fontSize: 16, color: Colors.white,)),
                                 5.0.addHSpace(),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -419,7 +391,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   margin: const EdgeInsets.only(right: 50),
                   decoration:  BoxDecoration(
                     borderRadius: const BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20),bottomRight: Radius.circular(20)),
-                    color:  Theme.of(context).colorScheme.primary, // Changed
+                    color:  Theme.of(context).colorScheme.primary,
                   ),
                   padding: const EdgeInsets.all(8),
                   child: Row(
@@ -447,34 +419,23 @@ class _ChatScreenState extends State<ChatScreen> {
     try {
       final response = await AIService().generateContentWithGemini(question);
       print("~~~~~~~~~~~~~from AI: $response");
-      data = response ?? ''; // Handle nullable
-      setState(() {});
+      data = response;
+      if (mounted) setState(() {});
     } catch (e) {
-      // Fallback or alternative OpenAI call if Gemini fails - this part might need review based on desired behavior
-      final request = ChatCompleteText(
-        messages: [
-          Messages(role: Role.user, content: question.trim())
-        ],
-        maxToken: token,
-        model: Gpt4ChatModel(), // Ensure this model is appropriate
-      );
-      try {
-        final response = await openAI.onChatCompletion(request: request);
-        for (var element in response!.choices) {
-          data = element.message?.content.toString() ?? "";
-        }
-      } catch (openAiError) {
-        print("OpenAI fallback failed: $openAiError");
-        data = "Error: Both Gemini and OpenAI calls failed.";
-      }
+      print("Gemini call failed: $e");
+      data = "Error: AI service failed. $e";
     }
     return data;
   }
 
+
+
   void sendMessageToAPI(String question) async {
-    setState(() {
-      inProgress = true;
-    });
+    if (mounted) {
+      setState(() {
+        inProgress = true;
+      });
+    }
 
     String day = DateTime.now().day.toString();
     String month = DateTime.now().month.toString();
@@ -482,38 +443,42 @@ class _ChatScreenState extends State<ChatScreen> {
     String answer = "Failed to get response please try again"; // Default answer
     try {
       answer = await chatComplete(question);
-      // await SharedPrefsUtils.storeChat(chat: messageController.text.isEmpty ? widget.message:   messageController.text , sentByMe: false,dateTime: "$day/$month/$year",answer: answer);
-      // addMessageToMessageList(answer, false); // Message is added with actual answer in chatComplete or error handled there
-      // isVoiceOn == true ? _speak(answer) : null;
     } catch (e) {
       print("sendMessageToAPI Error: $e");
-      // answer is already set to default error message
     } finally {
        await SharedPrefsUtils.storeChat(chat: messageController.text.isEmpty ? widget.message:   messageController.text , sentByMe: false,dateTime: "$day/$month/$year",answer: answer);
       addMessageToMessageList(answer, false);
-      if (isVoiceOn == true && answer.isNotEmpty && !answer.contains("Error:")) {
+      if (isVoiceOn == true && answer.isNotEmpty && !answer.toLowerCase().contains("error:")) {
          _speak(answer);
-      } else if (isVoiceOn == true && (answer.isEmpty || answer.contains("Error:"))) {
+      } else if (isVoiceOn == true && (answer.isEmpty || answer.toLowerCase().contains("error:"))) {
         _speak("Failed to get response please try again");
       }
-      setState(() {
-         inProgress = false;
-      });
+      if (mounted) {
+        setState(() {
+           inProgress = false;
+        });
+      }
       Future.delayed(Duration(seconds: 1),(){
         downScroll();
       });
     }
   }
 
-  void addMessageToMessageList(String message, bool sentByMe) {
+  void addMessageToMessageList(String text, bool sentByMe) {
     String day = DateTime.now().day.toString();
     String month = DateTime.now().month.toString();
     String year = DateTime.now().year.toString();
 
-    setState(() {
-      // For AI messages, 'message' is the answer. For user messages, 'answer' can be empty or same as message.
-      messageList.insert(0, MessageModel(message: sentByMe ? message : "", answer: sentByMe ? "" : message, sentByMe: sentByMe,dateTime: "$day/$month/$year"));
-    });
+    if (mounted) {
+      setState(() {
+        messageList.insert(0, MessageModel(
+          message: sentByMe ? text : "",
+          answer: sentByMe ? "" : text,
+          sentByMe: sentByMe,
+          dateTime: "$day/$month/$year"
+        ));
+      });
+    }
   }
 
   List<Map> chatMessages = [];

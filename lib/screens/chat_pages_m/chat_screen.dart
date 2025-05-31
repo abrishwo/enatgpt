@@ -10,36 +10,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../constant/app_color.dart';
-import '../../constant/app_icon.dart';
-import '../../constant/app_assets.dart';
-import '../../modals/chat_message.dart';
+import '../../constant/app_color.dart'; // Keep if AppColor.primaryColor is used
+// import '../../constant/app_icon.dart'; // AppIcon seems unused now
+// import '../../constant/app_assets.dart'; // AppAssets seems unused now
+import '../../modals/chat_message.dart'; // Unused
 import '../../modals/message_model.dart';
 import 'package:chat_gpt/services/ai_service.dart';
 import '../../utils/app_keys.dart';
-import '../../utils/extension.dart';
-import '../../utils/shared_prefs_utils.dart';
+// import '../../utils/extension.dart'; // Unused
+// import '../../utils/shared_prefs_utils.dart'; // Unused
 import '../../widgets/app_textfield.dart';
 import '../../widgets/message_bubble.dart';
 import '../home_pages/home_screen.dart';
-import '../home_pages/home_screen_controller.dart';
-import '../setting_pages/setting_page_controller.dart';
-import 'chat_controller.dart';
+// import '../home_pages/home_screen_controller.dart'; // Unused
+// import '../setting_pages/setting_page_controller.dart'; // Unused
+// import 'chat_controller.dart'; // Unused
 
-import 'package:chat_gpt/screens/premium_pages/premium_screen.dart';
-// import 'package:chat_gpt/utils/app_keys.dart'; // Already imported via ai_service or app_keys
-import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
-import 'package:flutter/services.dart';
+// import 'package:chat_gpt/screens/premium_pages/premium_screen.dart';// Unused
+// import 'package:chat_gpt_sdk/chat_gpt_sdk.dart'; // Removed
+// import 'package:flutter/services.dart'; // Unused
 
-// import 'package:chat_gpt/utils/extension.dart'; // Already imported
-
-
-
-import '../../widgets/message_composer.dart';
-
-
-import '../premium_pages/premium_screen_controller.dart';
-
+// import '../../widgets/message_composer.dart'; // Unused
+// import '../premium_pages/premium_screen_controller.dart';// Unused
 
 
 class ChatScreen extends StatefulWidget {
@@ -53,18 +45,17 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final ScreenshotController screenshotController = ScreenshotController();
-  final HomeScreenController homeScreenController = HomeScreenController();
-  final ChatController chatController = Get.put(ChatController());
+  // final HomeScreenController homeScreenController = HomeScreenController(); // Unused
+  // final ChatController chatController = Get.put(ChatController()); // Unused
   final TextEditingController messageController = TextEditingController();
   final FlutterTts flutterTts = FlutterTts();
   final ScrollController scrollController = ScrollController();
-  final GlobalKey globalKey = GlobalKey();
+  // final GlobalKey globalKey = GlobalKey(); // Unused
 
-  List<ChatMessage> _messages = [ChatMessage('Hello, how can I help?', false)];
+  // List<ChatMessage> _messages = [ChatMessage('Hello, how can I help?', false)]; // Unused
   List<MessageModel> messageList = [];
 
   bool _awaitingResponse = false;
-  bool inProgress = true;
   int messageLimit = maxMessageLimit;
   bool isVoiceOn = voiceOff;
 
@@ -77,10 +68,12 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> _loadPrefs() async {
     final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      messageLimit = prefs.getInt('messageLimit') ?? maxMessageLimit;
-      isVoiceOn = prefs.getBool('voice') ?? voiceOff;
-    });
+    if(mounted) {
+      setState(() {
+        messageLimit = prefs.getInt('messageLimit') ?? maxMessageLimit;
+        isVoiceOn = prefs.getBool('voice') ?? voiceOff;
+      });
+    }
   }
 
   Future<void> _storeMessage(int value) async {
@@ -91,9 +84,11 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<void> _storeVoice(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('voice', value);
-    setState(() {
-      isVoiceOn = value;
-    });
+    if(mounted) {
+      setState(() {
+        isVoiceOn = value;
+      });
+    }
   }
 
   void _initializeChat() {
@@ -101,33 +96,25 @@ class _ChatScreenState extends State<ChatScreen> {
     _sendToAPI(widget.message);
   }
 
-int _addMessage(String content, {required bool isUser}) {
-  String day = DateTime.now().day.toString();
-  String month = DateTime.now().month.toString();
-  String year = DateTime.now().year.toString();
-
-  final model = MessageModel(
-    message: isUser ? content : "",
-    sentByMe: isUser,
-    dateTime: "$day/$month/$year",
-    answer: isUser ? "" : content
-  );
-
-  setState(() {
-    messageList.add(model);
-  });
-
-  return messageList.length - 1;
-}
-
-  void _addMessage2(String content, {required bool isUser}) {
-
+  int _addMessage(String content, {required bool isUser, String? answerContent}) {
     String day = DateTime.now().day.toString();
     String month = DateTime.now().month.toString();
     String year = DateTime.now().year.toString();
-    setState(() {
-      messageList.add(MessageModel(message: content, sentByMe: isUser, dateTime: "$day/$month/$year", answer: "loading..."));
-    });
+
+    final model = MessageModel(
+      message: isUser ? content : (answerContent ?? ""),
+      sentByMe: isUser,
+      dateTime: "$day/$month/$year",
+      answer: isUser ? "" : (answerContent ?? content)
+    );
+
+    if(mounted) {
+      setState(() {
+        messageList.insert(0, model);
+      });
+    }
+    _scrollToBottom();
+    return messageList.isNotEmpty ? 0 : -1;
   }
 
   Future<void> _speak(String value) async {
@@ -141,8 +128,8 @@ int _addMessage(String content, {required bool isUser}) {
       if (scrollController.hasClients) {
         scrollController.animateTo(
           scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
         );
       }
     });
@@ -165,23 +152,15 @@ int _addMessage(String content, {required bool isUser}) {
       listener: const BannerAdListener(),
     )..load();
 
-    final adWidget = AdWidget(ad: myBanner);
-    final adContainer = Container(
-      alignment: Alignment.center,
-      width: myBanner.size.width.toDouble(),
-      height: myBanner.size.height.toDouble(),
-      child: adWidget,
-    );
-
     return WillPopScope(
       onWillPop: () async {
-        Get.offAll(const HomeScreen(), transition: Transition.rightToLeft);
+        Get.offAll(() => const HomeScreen(), transition: Transition.rightToLeft);
         return true;
       },
       child: Screenshot(
         controller: screenshotController,
         child: Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.background, // Changed
+          backgroundColor: Theme.of(context).colorScheme.background,
           appBar: _buildAppBar(context),
           body: Stack(
             alignment: Alignment.bottomCenter,
@@ -193,9 +172,21 @@ int _addMessage(String content, {required bool isUser}) {
                         ? const Center(child: Text("No messages yet"))
                         : _buildMessageList(),
                   ),
+                  if (_awaitingResponse)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                           SizedBox(height: 20, width: 20, child: CircularProgressIndicator()),
+                           SizedBox(width: 10),
+                           Text("Loading...")
+                        ],
+                      ),
+                    ),
+                  _buildSendMessageBox(context),
                 ],
               ),
-              _buildSendMessageBox(context),
             ],
           ),
         ),
@@ -207,11 +198,11 @@ int _addMessage(String content, {required bool isUser}) {
     return AppBar(
       centerTitle: true,
       title: appBarTitle(context),
-      backgroundColor: Theme.of(context).colorScheme.background, // Changed
+      backgroundColor: Theme.of(context).colorScheme.background,
       elevation: 0,
       leading: IconButton(
-        onPressed: () => Get.offAll(const HomeScreen(), transition: Transition.rightToLeft),
-        icon: Icon(Icons.arrow_back_rounded, color: Theme.of(context).textTheme.displayLarge?.color), // Changed
+        onPressed: () => Get.offAll(() => const HomeScreen(), transition: Transition.rightToLeft),
+        icon: Icon(Icons.arrow_back_rounded, color: Theme.of(context).textTheme.displayLarge?.color),
       ),
       actions: [
         _buildMessageCounterButton(context),
@@ -225,10 +216,10 @@ int _addMessage(String content, {required bool isUser}) {
     return Padding(
       padding: const EdgeInsets.only(right: 12.0),
       child: Chip(
-        backgroundColor: AppColor.primaryColor, // This might need to be Theme.of(context).colorScheme.primaryContainer or similar
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         label: Text(
           "$messageLimit left",
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.white), // Changed from caption
+          style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer),
         ),
       ),
     );
@@ -236,9 +227,10 @@ int _addMessage(String content, {required bool isUser}) {
 
   Widget _buildVoiceToggleButton() {
     return IconButton(
-      onPressed: () {
-        setState(() => isVoiceOn = !isVoiceOn);
-        _storeVoice(isVoiceOn);
+      onPressed: () async {
+        await _storeVoice(!isVoiceOn);
+        if (!isVoiceOn) await flutterTts.stop();
+         showToast(text: isVoiceOn ? "voiceIsOn".tr : "voiceIsOff".tr);
       },
       icon: Icon(
         isVoiceOn ? Icons.volume_up_rounded : Icons.volume_off_rounded,
@@ -267,8 +259,7 @@ int _addMessage(String content, {required bool isUser}) {
 
   Widget _buildSendMessageBox(BuildContext context) {
     return Container(
-      // color: context.theme.cardColor, // This was an error before, cardColor is not on ThemeData directly
-      color: Theme.of(context).cardColor, // Correct way to access cardColor
+      color: Theme.of(context).cardColor,
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
       child: SafeArea(
         child: Row(
@@ -282,7 +273,7 @@ int _addMessage(String content, {required bool isUser}) {
             const SizedBox(width: 10),
             IconButton(
               onPressed: _awaitingResponse ? null : _onSendPressed,
-              icon: Icon(Icons.send, color: Theme.of(context).colorScheme.primary), // Changed
+              icon: Icon(Icons.send, color: Theme.of(context).colorScheme.primary),
             ),
           ],
         ),
@@ -296,7 +287,6 @@ int _addMessage(String content, {required bool isUser}) {
 
     _addMessage(input, isUser: true);
     messageController.clear();
-    _scrollToBottom();
     _sendToAPI(input);
   }
 
@@ -307,97 +297,42 @@ int _addMessage(String content, {required bool isUser}) {
       itemCount: messageList.length,
       itemBuilder: (context, index) {
         final msg = messageList[index];
-        // Assuming MessageBubble is updated or uses standard Material widgets that adapt to Theme
         return MessageBubble(message: msg.sentByMe ? msg.message : msg.answer, isUserMessage: msg.sentByMe);
-
       },
     );
   }
 
 Future<void> _sendToAPI(String input) async {
-  if (messageLimit <= 0) {
+  if (messageLimit <= 0 && messageLimit != -1) {
     Get.snackbar("Limit Reached", "You’ve reached your daily limit.");
     return;
   }
 
-  setState(() {
-    _awaitingResponse = true;
+  if(mounted) setState(() => _awaitingResponse = true);
+  if (messageLimit != -1) {
     messageLimit--;
-  });
-  _storeMessage(messageLimit);
+    await _storeMessage(messageLimit);
+  }
 
-  final responseIndex = _addMessage("...", isUser: false);
+  String aiResponseText = "Failed to get response. Please try again.";
 
   try {
-    final chatGptApi = AIService();
-    final response = await chatGptApi.getChatResponse(input); // Assuming getChatResponse is the desired OpenAI method here
+    final aiService = AIService();
+    aiResponseText = await aiService.generateContentWithGemini(input); // Changed to Gemini
 
-    if (response != null) {
-      print("opeai: $response");
-      setState(() {
-        if (responseIndex >= 0 && responseIndex < messageList.length) {
-            messageList[responseIndex].answer = response;
-        }
-      });
+    _addMessage(input, isUser: false, answerContent: aiResponseText);
 
-      _scrollToBottom();
-      if (isVoiceOn) await _speak(response);
-    } else {
-        if (responseIndex >= 0 && responseIndex < messageList.length) {
-            messageList[responseIndex].answer = "Failed to get response.";
-        }
-    }
+    if (isVoiceOn) await _speak(aiResponseText);
+
   } catch (e) {
-    debugPrint("Error from OpenAI: $e");
-    if (responseIndex >= 0 && responseIndex < messageList.length) {
-        messageList[responseIndex].answer = "Error: Exception occurred.";
-    }
-    Get.snackbar("Error", "Failed to get a response.");
+    debugPrint("Error from AI Service: $e");
+    _addMessage(input, isUser: false, answerContent: aiResponseText); // Add error message to UI
+    Get.snackbar("Error", "Failed to get a response from AI.");
   } finally {
-    setState(() => _awaitingResponse = false);
+    if(mounted) setState(() => _awaitingResponse = false);
+    _scrollToBottom();
   }
 }
 
-  Future<void> _sendToAPI2(String input) async {
-    if (messageLimit <= 0) {
-      Get.snackbar("Limit Reached", "You’ve reached your daily limit.");
-      return;
-    }
-
-    setState(() {
-      _awaitingResponse = true;
-      messageLimit--;
-    });
-    _storeMessage(messageLimit);
-    final responseIndex = _addMessage("...", isUser: false);
-
-    try {
-      final chatGptApi = AIService();
-      final response = await chatGptApi.getChatResponse(input); // Assuming getChatResponse is the desired OpenAI method here
-
-      if (response != null) {
-         setState(() {
-            if (responseIndex >= 0 && responseIndex < messageList.length) {
-                messageList[responseIndex].answer = response;
-            }
-        });
-        print("opeai: $response");
-        _scrollToBottom();
-
-        if (isVoiceOn) await _speak(response);
-      } else {
-        if (responseIndex >= 0 && responseIndex < messageList.length) {
-            messageList[responseIndex].answer = "Failed to get response.";
-        }
-      }
-    } catch (e) {
-      debugPrint("Error from OpenAI: $e");
-      if (responseIndex >= 0 && responseIndex < messageList.length) {
-            messageList[responseIndex].answer = "Error: Exception occurred.";
-      }
-      Get.snackbar("Error", "Failed to get a response.");
-    } finally {
-      setState(() => _awaitingResponse = false);
-    }
-  }
+// _sendToAPI2 method removed
 }

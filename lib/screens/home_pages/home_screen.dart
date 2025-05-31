@@ -1,30 +1,30 @@
-import 'dart:convert';
+// import 'dart:convert'; // Unused
 import 'dart:io';
-import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
-import 'package:http/http.dart' as http;
+// import 'package:chat_gpt_sdk/chat_gpt_sdk.dart'; // Removed
+// import 'package:http/http.dart' as http; // Unused
 import 'package:chat_gpt/constant/app_icon.dart';
-import 'package:chat_gpt/screens/chat_pages/chat_screen.dart';
-import 'package:chat_gpt/screens/premium_pages/premium_screen.dart';
+import 'package:chat_gpt/screens/chat_pages/chat_screen.dart'; // Ensure this is imported
+// import 'package:chat_gpt/screens/premium_pages/premium_screen.dart'; // Unused in this direct context
 import 'package:chat_gpt/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../modals/all_modal.dart';
-import '../../modals/chat_message.dart';
+import '../../modals/all_modal.dart'; // Keep if chatGPTList uses it
+// import '../../modals/chat_message.dart'; // Unused
 import '../../utils/app_keys.dart';
 import '../../widgets/app_textfield.dart';
-import '../../widgets/message_composer.dart';
-import '../demo/chat_api.dart';
-import '../demo/chat_page.dart';
+// import '../../widgets/message_composer.dart'; // Unused
+// import '../demo/chat_api.dart'; // Removed
+// import '../demo/chat_page.dart'; // Removed
 import '../history_pages/history_screen.dart';
-import '../premium_pages/premium_screen_controller.dart';
+// import '../premium_pages/premium_screen_controller.dart'; // Unused
 import '../search_images_pages/search_images_screen.dart';
-import '../setting_pages/setting_page_controller.dart';
+// import '../setting_pages/setting_page_controller.dart'; // Unused
 import '../setting_pages/setting_screen.dart';
 import 'home_screen_controller.dart';
 
-int messageLimit = 100;
+// int messageLimit = 100; // This global variable seems unused here, maxMessageLimit is used from app_keys
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -34,16 +34,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int messageLimit = maxMessageLimit;
+  int messageLimit = maxMessageLimit; // From app_keys.dart
   InterstitialAd? _interstitialAd;
-  SettingPageController settingPageController =
-      Get.put(SettingPageController());
+  // SettingPageController settingPageController = // This can be removed if not used
+  //     Get.put(SettingPageController());
   HomeScreenController homeScreenController = Get.put(HomeScreenController());
-  // PremiumScreenController premiumScreenController =
-  //     Get.put(PremiumScreenController());
 
-  var _awaitingResponse = false;
-  late final ChatApi chatApi;
+  // var _awaitingResponse = false; // Unused
+  // late final ChatApi chatApi; // Removed
 
   void _loadInterstitialAd() {
     InterstitialAd.load(
@@ -58,19 +56,16 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           );
         },
-        onAdFailedToLoad: (err) {},
+        onAdFailedToLoad: (err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+        },
       ),
     );
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    // premiumScreenController.getDate();
-    // premiumScreenController.isPremium;
-    // print(
-    //     "premiumScreenController.isPremium ----> ${premiumScreenController.isPremium}");
     getMessageLimit();
     _loadInterstitialAd();
   }
@@ -81,11 +76,10 @@ class _HomeScreenState extends State<HomeScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     messageLimit = prefs.getInt('messageLimit') ?? maxMessageLimit;
     print('messageLimit -->$messageLimit');
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
-  bool autoFocus = false;
-
+  // bool autoFocus = false; // Unused
 
   TextEditingController messageController = TextEditingController();
 
@@ -100,20 +94,20 @@ class _HomeScreenState extends State<HomeScreen> {
           showImageGeneration == true
               ? IconButton(
                   onPressed: () {
-                    Get.to(const ImageGenerationScreen(),
+                    Get.to(() => const ImageGenerationScreen(), // Added () => for Get.to
                         transition: Transition.rightToLeft);
                   },
                   icon: AppIcon.aiImageIcon(context))
               : Container(),
           IconButton(
               onPressed: () {
-                Get.to(const HistoryScreen(),
+                Get.to(() => const HistoryScreen(), // Added () => for Get.to
                     transition: Transition.rightToLeft);
               },
               icon: AppIcon.historyIcon(context)),
           IconButton(
               onPressed: () {
-                Get.offAll(const SettingScreen(), transition: Transition.fade);
+                Get.offAll(() => const SettingScreen(), transition: Transition.fade); // Added () => for Get.offAll
               },
               icon: AppIcon.settingIcon(context)),
 
@@ -191,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     shrinkWrap: true,
                                     physics:
                                         const NeverScrollableScrollPhysics(),
-                                    itemCount: chatGPTList.length,
+                                    itemCount: chatGPTList.length, // Assuming chatGPTList is defined elsewhere or in scope
                                     itemBuilder: (context, index) {
                                       return chatGPTList[index].name ==
                                               homeScreenController.selectedText
@@ -205,20 +199,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               itemBuilder: (context, i) {
                                                 return GestureDetector(
                                                   onTap: (){
-                                                    // FocusScope.of(context).requestFocus(inputNode);
-                                                    // _interstitialAd?.show();
-                                                    // _loadInterstitialAd();
-                                                    // messageController.text = chatGPTList[index].categoriesData[i].question;
-                                                    // setState(() {});
-                                                    //
-                                                    // messageController.text = chatGPTList[index].categoriesData[i].question;
-                                                    // setState(() {});
-
-                                                    // _interstitialAd?.show();
                                                     FocusScope.of(context).requestFocus(inputNode);
-                                                    // _loadInterstitialAd();
                                                     messageController.text = chatGPTList[index].categoriesData[i].question;
-                                                    setState(() {});
+                                                    if (mounted) setState(() {});
                                                   },
                                                   child: Container(
                                                     padding: const EdgeInsets.symmetric(vertical: 15),
@@ -252,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: context.isDarkMode == false
+                    color: Theme.of(context).brightness == Brightness.light // context.isDarkMode is not standard, using Theme.of(context).brightness
                         ? const Color(0xffEDEDED)
                         : Colors.white,
                   ),
@@ -263,10 +246,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           children: [
                             AppTextField(
-                              autoFocus: autoFocus,
+                              // autoFocus: autoFocus, // autoFocus was unused
                               focusNod: inputNode,
                               controller: messageController,
-                              maxLines: messageController.text.length < 10
+                              maxLines: messageController.text.length < 10 // This dynamic maxLines based on length is a bit unusual
                                   ? messageController.text.length < 20
                                       ? 3
                                       : 1
@@ -277,81 +260,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       IconButton(
                           onPressed: () async {
-                            /// Live Cord
-                            // hideKeyboard(context);
-                            // messageLimit == -1  ? null : messageLimit --;
-                            // print("messageLimit ---->${messageLimit}");
-                            // storeMessage(messageLimit);
-                            // await getMessageLimit();
-                            //
-                            // if(premiumScreenController.isPremium == true){
-                            //   if(messageController.text.isNotEmpty){
-                            //     Get.offAll(ChatScreen(message: messageController.text), transition: Transition.rightToLeft);
-                            //     messageController.clear();
-                            //   }else{
-                            //     showToast(text: 'pleaseEnterText'.tr);
-                            //   }
-                            // }
-                            //
-                            // // else
-                            //
-                            // if(messageLimit == -1){
-                            //   Get.to(const PremiumScreen(),transition: Transition.rightToLeft);
-                            // }else if(messageController.text.isNotEmpty){
-                            //   Get.offAll(ChatScreen(message: messageController.text), transition: Transition.rightToLeft);
-                            //   messageController.clear();
-                            // }else{
-                            //   showToast(text: 'pleaseEnterText'.tr);
-                            // }
-
-
-
                              if (messageController.text.isNotEmpty) {
                               Get.offAll(
-                                  ChatPage(
-                                      chatApi: ChatApi(),
-                                       messag: '${messageController.text}',),
+                                  () => ChatScreen(message: messageController.text), // Updated Navigation
                                   transition: Transition.rightToLeft);
                               messageController.clear();
                             } else {
                               showToast(text: 'pleaseEnterText'.tr);
                             }
-
-
-
-                            // if(isPremium == true) {
-                            //   if(messageLimit >= 5){
-                            //     Get.to(const PremiumScreen(),transition: Transition.rightToLeft);
-                            //   }else{
-                            //     if(messageController.text.isNotEmpty){
-                            //       Get.offAll(ChatScreen(message: messageController.text), transition: Transition.rightToLeft);
-                            //       messageController.clear();
-                            //     }else{
-                            //       Fluttertoast.showToast(
-                            //           msg: "pleaseEnterText".tr,
-                            //           toastLength: Toast.LENGTH_SHORT,
-                            //           gravity: ToastGravity.SNACKBAR,
-                            //           timeInSecForIosWeb: 1,
-                            //           backgroundColor: Colors.white,
-                            //           textColor: Colors.black,
-                            //           fontSize: 16.0
-                            //       );
-                            //     }
-                            //   }
-                            // }
-                            // messageLimit ++;
-                            // storeMessage(messageLimit);clbgfrgtllg
                           },
                           icon: const Icon(Icons.send, color: Colors.green)),
                     ],
                   )).marginSymmetric(horizontal: 15, vertical: 10),
             ],
           ),
-
-          // MessageComposer(
-          //   onSubmitted: _onSubmitted,
-          //   awaitingResponse: _awaitingResponse,
-          // ),
         ],
       ),
     );
@@ -361,6 +283,4 @@ class _HomeScreenState extends State<HomeScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('messageLimit', value);
   }
-
-
 }
