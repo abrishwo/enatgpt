@@ -10,6 +10,8 @@ import 'package:chat_gpt/utils/lenguage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'services/credit_service.dart'; // Import CreditService
+import 'controllers/rewarded_ads_controller.dart'; // Import RewardedAdsController
 import 'main_controller.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -19,6 +21,8 @@ void main() async {
   await MobileAds.instance.initialize();
   // await dotenv.load();
   // await loadEnvFile();
+  Get.put(CreditService()); // Register CreditService
+  Get.put(RewardedAdsController()); // Register RewardedAdsController
   runApp(const MyApp()); // Changed: Removed chatApi parameter
 }
 
@@ -31,6 +35,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(LanguageScreenController());
     Get.put(MainPageController());
+    // CreditService is already put in main(), so it's available throughout the app
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       translations: LocalString(),

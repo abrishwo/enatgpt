@@ -42,6 +42,9 @@ dependencies:
   flutter_svg: ^1.1.6
 #  chat_gpt_sdk: ^2.2.8 # Removed
 #  chat_gpt_sdk: ^3.1.4 # Removed
+  firebase_core: ^2.27.0 # Use the latest compatible version
+  cloud_firestore: ^4.15.8 # Use the latest compatible version
+  firebase_analytics: ^10.8.9 # Use a recent compatible version
   flutter_tts: ^3.6.3
   shared_preferences: ^2.0.18
   lottie: ^2.3.0

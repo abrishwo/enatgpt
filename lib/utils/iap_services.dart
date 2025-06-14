@@ -6,105 +6,205 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'dart:async';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
+import 'package:get/get.dart'; // Import Get for service locator
+import 'package:firebase_analytics/firebase_analytics.dart'; // Import Firebase Analytics
 
 import 'app_keys.dart';
-
-
-
-// const String kConsumableId = 'consumable_product';
-// const String kUpgradeId = 'non_consumable';
-
-const List<String> androidList = <String>[
-
-  weekPlanAndroid,
-  monthPlanAndroid,
-  yearPlanAndroid,
-];
-
-const List<String> iosList = <String>[
-  monthPlanIOS,
-  weekPlanIOS,
-  yearPlanIOS,
-];
+import '../services/credit_service.dart'; // Import CreditService
 
 class IapService {
-  final InAppPurchase inAppPurchase = InAppPurchase.instance;
+  final InAppPurchase _inAppPurchase = InAppPurchase.instance;
+  final CreditService _creditService = Get.find<CreditService>(); // Get CreditService instance
 
-  final List<String> productIds = [];
   List<PurchaseDetails> purchases = <PurchaseDetails>[];
-  List<ProductDetails> availableProducts = <ProductDetails>[
-    ProductDetails(id: '1', title: 'title', description: 'description', price: '$perMonthPrice', rawPrice: perMonthPrice, currencyCode: 'INR',currencySymbol: inAppCurrency),
-    ProductDetails(id: '2', title: 'title', description: 'description', price: '$perMonthPrice', rawPrice: perWeekPrice, currencyCode: 'INR',currencySymbol: inAppCurrency),
-    ProductDetails(id: '3', title: 'title', description: 'description', price: '$perMonthPrice', rawPrice: perYearPrice, currencyCode: 'INR',currencySymbol: inAppCurrency),
-  ];
+  List<ProductDetails> availableProducts = <ProductDetails>[];
 
   bool purchasePending = false;
-  bool autoConsume = true;
+  // autoConsume is set to true in buyConsumable, which is the plugin's default for Play Store.
+  // For iOS, purchases are non-consumable by default and finishTransaction makes them available again.
+  // The plugin abstracts this.
 
-  /// in app purchase
+  StreamSubscription<List<PurchaseDetails>>? _purchaseSubscription;
+
   Future<List<ProductDetails>> initStoreInfo({
-    bool? isAvailable,
-    required List<String> id,
-    List<String>? noFoundId,
+    required List<String> productIDsToQuery,
   }) async {
-    isAvailable = await inAppPurchase.isAvailable();
-    print("isAvailable");
-    if (!isAvailable) {
+    bool isPlatformAvailable = await _inAppPurchase.isAvailable();
+    log("IAP Service: Platform available: $isPlatformAvailable");
+
+    if (!isPlatformAvailable) {
+      availableProducts = [];
       return [];
     }
 
     if (Platform.isIOS) {
-      final InAppPurchaseStoreKitPlatformAddition iosPlatformAddition = InAppPurchase.instance.getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
+      final InAppPurchaseStoreKitPlatformAddition iosPlatformAddition =
+          _inAppPurchase.getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
       await iosPlatformAddition.setDelegate(ExamplePaymentQueueDelegate());
     }
 
+    log("IAP Service: Querying product details for IDs: ${productIDsToQuery.join(', ')}");
     try {
-      final ProductDetailsResponse productDetailsResponse = await inAppPurchase.queryProductDetails(id.toSet());
+      final ProductDetailsResponse productDetailsResponse =
+          await _inAppPurchase.queryProductDetails(productIDsToQuery.toSet());
 
       if (productDetailsResponse.productDetails.isNotEmpty) {
         availableProducts = productDetailsResponse.productDetails;
-        for (var element in availableProducts) {
-          log('availableProducts is:  ${element.id} --> ${element.title} : ${element.description}');
+        for (var pd in availableProducts) {
+          log('IAP Service: Found product: ${pd.id} - ${pd.title} - ${pd.description} - ${pd.price}');
         }
+      } else {
+        availableProducts = [];
+        log('IAP Service: No product details found for IDs: ${productIDsToQuery.join(', ')}');
       }
+
       if (productDetailsResponse.notFoundIDs.isNotEmpty) {
-        noFoundId = productDetailsResponse.notFoundIDs;
+        log('IAP Service: Not found IDs: ${productDetailsResponse.notFoundIDs.join(', ')}');
       }
-      if (productDetailsResponse.error != null) {}
-    } on InAppPurchaseException catch (e) {
-      log('Error in InAppPurchase --> ${e.message}');
+      if (productDetailsResponse.error != null) {
+        log('IAP Service: Error querying products: ${productDetailsResponse.error!.code} - ${productDetailsResponse.error!.message}');
+        availableProducts = [];
+      }
+    } catch (e) {
+      log('IAP Service: Generic error querying products: $e');
+      availableProducts = [];
     }
-    print("--->availableProducts ${availableProducts.length}");
-    availableProducts.forEach((element) {
-      log("--->availableProducts Id: ${"${element.id}Title:  ${element.title}"}");
-    });
+
+    log("IAP Service: Returning ${availableProducts.length} available products.");
     return availableProducts;
   }
 
-  listenToPurchaseUpdated({List<PurchaseDetails>? purchaseDetailsList, Function? updatePlan}) async {
-    for (PurchaseDetails purchaseDetails in purchaseDetailsList!) {
-      log("PurchaseStatus-----> ${purchaseDetails.status}");
-      if (purchaseDetails.status == PurchaseStatus.pending) {
-      } else {
-        if (purchaseDetails.status == PurchaseStatus.error) {
-        } else if (purchaseDetails.status == PurchaseStatus.purchased) {
-          log("PurchaseStatus purchased-----> ${purchaseDetails.status}");
-          // addPurchase(context);
-        }
-        if (purchaseDetails.pendingCompletePurchase) {
-          await inAppPurchase.completePurchase(purchaseDetails);
-        }
-        if (purchaseDetails.status == PurchaseStatus.canceled) {}
-      }
+  List<ProductDetails> getFetchedProducts() {
+    return availableProducts;
+  }
+
+  void initializeListeners() {
+    _purchaseSubscription = _inAppPurchase.purchaseStream.listen(
+      (List<PurchaseDetails> purchaseDetailsList) {
+        _handlePurchaseUpdates(purchaseDetailsList);
+      },
+      onDone: () {
+        log("IAP Service: Purchase stream completed.");
+        _purchaseSubscription?.cancel();
+      },
+      onError: (error) {
+        log("IAP Service: Error on purchase stream: $error");
+      },
+    );
+  }
+
+  Future<void> buyCreditPack(ProductDetails productDetails) async {
+    final PurchaseParam purchaseParam = PurchaseParam(productDetails: productDetails);
+    try {
+      // For consumable products, buyConsumable is appropriate.
+      // autoConsume is true by default for Play Store. For iOS, this is like a non-consumable
+      // that then gets completed. The plugin handles the platform differences.
+      await _inAppPurchase.buyConsumable(purchaseParam: purchaseParam, autoConsume: true);
+      log("IAP Service: buyConsumable call initiated for ${productDetails.id}");
+    } catch (e) {
+      log("IAP Service: Error on buyConsumable call: $e");
+      // Handle error, e.g., show a message to the user
     }
   }
 
+  Future<void> _handlePurchaseUpdates(List<PurchaseDetails> purchaseDetailsList) async {
+    for (PurchaseDetails purchaseDetails in purchaseDetailsList) {
+      log("IAP Service: Processing purchase update for ${purchaseDetails.productID}, status: ${purchaseDetails.status}");
+
+      if (purchaseDetails.status == PurchaseStatus.purchased) {
+        log("IAP Service: Purchase successful for ${purchaseDetails.productID}");
+        log("IAP Service: Purchase ID: ${purchaseDetails.purchaseID}");
+        log("IAP Service: Server Verification Data: ${purchaseDetails.verificationData.serverVerificationData}");
+
+        // Client-side validation is assumed here.
+        // For robust validation, `purchaseDetails.verificationData.serverVerificationData`
+        // should be sent to your server for validation with App Store/Play Store server APIs.
+
+        double creditsToGrant = 0;
+        // Determine credits based on product ID
+        switch (purchaseDetails.productID) {
+          case credits5GooglePlay:
+          case credits5IOS: // Added iOS product IDs
+          case credits5Amazon:
+            creditsToGrant = 5.0;
+            break;
+          case credits10GooglePlay:
+          case credits10IOS: // Added iOS product IDs
+          case credits10Amazon:
+            creditsToGrant = 10.0;
+            break;
+          case credits20GooglePlay:
+          case credits20IOS: // Added iOS product IDs
+          case credits20Amazon:
+            creditsToGrant = 20.0;
+            break;
+          default:
+            log("IAP Service: Unknown product ID purchased: ${purchaseDetails.productID}");
+            // Handle unknown product ID, maybe show an error or log extensively.
+            break;
+        }
+
+        if (creditsToGrant > 0) {
+          // Log analytics event BEFORE granting credits
+          ProductDetails? purchasedProductDetails = availableProducts.firstWhereOrNull(
+            (pd) => pd.id == purchaseDetails.productID
+          );
+
+          FirebaseAnalytics.instance.logEvent(
+            name: 'credit_pack_purchased',
+            parameters: {
+              'product_id': purchaseDetails.productID,
+              'price': purchasedProductDetails?.price ?? 'unknown',
+              'currency': purchasedProductDetails?.currencyCode ?? 'unknown',
+              'credits_awarded': creditsToGrant,
+              'user_id': _creditService.currentUserCredit.value?.userId ?? 'unknown_user',
+            },
+          );
+          log("IAP Service: Logged credit_pack_purchased event for ${purchaseDetails.productID}.");
+
+          bool creditsAdded = await _creditService.addCredits(creditsToGrant);
+          if (creditsAdded) {
+            log("IAP Service: Successfully granted $creditsToGrant credits to user for product ${purchaseDetails.productID}.");
+          } else {
+            log("IAP Service: Failed to grant $creditsToGrant credits for product ${purchaseDetails.productID}. User might not be logged in or another issue occurred.");
+            // This is a critical issue: purchase was made but credits not granted.
+            // Implement retry logic or manual adjustment process.
+          }
+        }
+
+        // Complete the purchase. This is crucial for all platforms.
+        // For Android, if autoConsume:true was used with buyConsumable, this also consumes it.
+        // For iOS, this finishes the transaction.
+        if (purchaseDetails.pendingCompletePurchase) {
+          await _inAppPurchase.completePurchase(purchaseDetails);
+          log("IAP Service: Purchase completed in Firestore for ${purchaseDetails.productID}.");
+        } else {
+           log("IAP Service: Purchase for ${purchaseDetails.productID} did not require explicit completion call (pendingCompletePurchase was false).");
+        }
+
+      } else if (purchaseDetails.status == PurchaseStatus.error) {
+        log("IAP Service: Purchase error for ${purchaseDetails.productID}: ${purchaseDetails.error?.message}");
+        // Show error to user (e.g., via a GetX controller state update or a callback)
+      } else if (purchaseDetails.status == PurchaseStatus.canceled) {
+        log("IAP Service: Purchase canceled for ${purchaseDetails.productID}");
+        // Update UI if needed
+      } else if (purchaseDetails.status == PurchaseStatus.pending) {
+        log("IAP Service: Purchase pending for ${purchaseDetails.productID}");
+        // Update UI to show pending state
+      }
+      // Restored and other statuses can be handled here if necessary
+    }
+  }
+
+  void dispose() {
+    _purchaseSubscription?.cancel();
+  }
 }
 
 class ExamplePaymentQueueDelegate implements SKPaymentQueueDelegateWrapper {
-
   @override
-  bool shouldContinueTransaction(SKPaymentTransactionWrapper transaction, SKStorefrontWrapper storefront) {
+  bool shouldContinueTransaction(
+      SKPaymentTransactionWrapper transaction, SKStorefrontWrapper storefront) {
     return true;
   }
 
@@ -112,6 +212,4 @@ class ExamplePaymentQueueDelegate implements SKPaymentQueueDelegateWrapper {
   bool shouldShowPriceConsent() {
     return false;
   }
-
 }
-

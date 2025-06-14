@@ -79,6 +79,43 @@ const String shareAppLinkAndroid = "https://play.google.com/store/apps/details?i
 /// SHARE APP LINK FOR  IOS
 const String shareAppLinkIOSid = "SHARE APP LINK IOS";
 
+// Credit Packs - Consumable
+const String credits5GooglePlay = 'enatgpt_credits_5';
+const String credits10GooglePlay = 'enatgpt_credits_10';
+const String credits20GooglePlay = 'enatgpt_credits_20';
+
+const String credits5Amazon = 'enatgpt_credits_5_amazon'; // Or use the same if SKUs can be identical
+const String credits10Amazon = 'enatgpt_credits_10_amazon';
+const String credits20Amazon = 'enatgpt_credits_20_amazon';
+
+// List for IAP service
+
+// Assuming same IDs for testing on iOS for now, replace with actual App Store IDs later.
+const String credits5IOS = credits5GooglePlay;
+const String credits10IOS = credits10GooglePlay;
+const String credits20IOS = credits20GooglePlay;
+
+const List<String> consumableCreditProductsAndroid = [
+  credits5GooglePlay,
+  credits10GooglePlay,
+  credits20GooglePlay,
+];
+
+const List<String> consumableCreditProductsIOS = [ // New list for iOS
+  credits5IOS,
+  credits10IOS,
+  credits20IOS,
+];
+
+const List<String> consumableCreditProductsAmazon = [
+  credits5Amazon,
+  credits10Amazon,
+  credits20Amazon,
+];
+
+// Rewarded Ad Units
+const String rewardedAdUnitIdAndroid = 'ca-app-pub-3940256099942544/5224354917'; // Test ID
+const String rewardedAdUnitIdIOS = 'ca-app-pub-3940256099942544/1712485313';     // Test ID
 
 /// IN APP PURCHASE PRICES :-
 double perMonthPrice = 30; /// PER MONTH

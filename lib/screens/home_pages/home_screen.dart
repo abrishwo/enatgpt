@@ -4,27 +4,24 @@ import 'dart:io';
 // import 'package:http/http.dart' as http; // Unused
 import 'package:chat_gpt/constant/app_icon.dart';
 import 'package:chat_gpt/screens/chat_pages/chat_screen.dart'; // Ensure this is imported
-// import 'package:chat_gpt/screens/premium_pages/premium_screen.dart'; // Unused in this direct context
 import 'package:chat_gpt/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../modals/all_modal.dart'; // Keep if chatGPTList uses it
-// import '../../modals/chat_message.dart'; // Unused
 import '../../utils/app_keys.dart';
 import '../../widgets/app_textfield.dart';
-// import '../../widgets/message_composer.dart'; // Unused
-// import '../demo/chat_api.dart'; // Removed
-// import '../demo/chat_page.dart'; // Removed
 import '../history_pages/history_screen.dart';
-// import '../premium_pages/premium_screen_controller.dart'; // Unused
 import '../search_images_pages/search_images_screen.dart';
-// import '../setting_pages/setting_page_controller.dart'; // Unused
 import '../setting_pages/setting_screen.dart';
 import 'home_screen_controller.dart';
 
-// int messageLimit = 100; // This global variable seems unused here, maxMessageLimit is used from app_keys
+// NEW IMPORTS
+import 'package:chat_gpt/services/credit_service.dart';
+import 'package:chat_gpt/controllers/rewarded_ads_controller.dart';
+import 'package:chat_gpt/screens/buy_credits_screen/buy_credits_screen.dart'; // Import BuyCreditsScreen
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -36,14 +33,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int messageLimit = maxMessageLimit; // From app_keys.dart
   InterstitialAd? _interstitialAd;
-  // SettingPageController settingPageController = // This can be removed if not used
-  //     Get.put(SettingPageController());
   HomeScreenController homeScreenController = Get.put(HomeScreenController());
 
-  // var _awaitingResponse = false; // Unused
-  // late final ChatApi chatApi; // Removed
+  // Access services/controllers
+  final CreditService creditService = Get.find<CreditService>();
+  final RewardedAdsController rewardedAdsController = Get.find<RewardedAdsController>();
+
 
   void _loadInterstitialAd() {
+    if (isPremium || adsOff) return; // Don't load if premium or ads are off
     InterstitialAd.load(
       adUnitId: Platform.isAndroid ? interstitialAndroidId : interstitialIosId,
       request: const AdRequest(),
@@ -79,8 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (mounted) setState(() {});
   }
 
-  // bool autoFocus = false; // Unused
-
   TextEditingController messageController = TextEditingController();
 
   @override
@@ -91,32 +87,90 @@ class _HomeScreenState extends State<HomeScreen> {
         title: appBarTitle(context),
         backgroundColor: Theme.of(context).colorScheme.background,
         actions: [
-          showImageGeneration == true
-              ? IconButton(
+          Obx(() => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Center(
+                  child: Text(
+                    'Credits: ${creditService.currentUserCredit.value?.balance?.toStringAsFixed(1) ?? "0.0"}',
+                    style: TextStyle(fontSize: 16, color: Theme.of(context).textTheme.bodyLarge?.color),
+                  )
+                ),
+              )),
+          if (showImageGeneration == true)
+              IconButton(
                   onPressed: () {
-                    Get.to(() => const ImageGenerationScreen(), // Added () => for Get.to
+                    Get.to(() => const ImageGenerationScreen(),
                         transition: Transition.rightToLeft);
                   },
                   icon: AppIcon.aiImageIcon(context))
-              : Container(),
+          else Container(),
           IconButton(
               onPressed: () {
-                Get.to(() => const HistoryScreen(), // Added () => for Get.to
+                Get.to(() => const HistoryScreen(),
                     transition: Transition.rightToLeft);
               },
               icon: AppIcon.historyIcon(context)),
           IconButton(
               onPressed: () {
-                Get.offAll(() => const SettingScreen(), transition: Transition.fade); // Added () => for Get.offAll
+                Get.offAll(() => const SettingScreen(), transition: Transition.fade);
               },
               icon: AppIcon.settingIcon(context)),
-
         ],
         elevation: 0,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Credit Buttons Row
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                // "Watch Ad for Credits" Button
+                Expanded( // Use Expanded to allow buttons to share space
+                  child: Obx(() {
+                    bool adCanBeShown = rewardedAdsController.isAdAvailable.value && !rewardedAdsController.isAdLoading.value;
+                    bool isLoading = rewardedAdsController.isAdLoading.value;
+
+                    if (isPremium || adsOff) {
+                      return const SizedBox.shrink();
+                    }
+
+                    return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal,
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10), // Adjusted padding
+                        textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold) // Adjusted font size
+                      ),
+                      onPressed: adCanBeShown
+                          ? () => rewardedAdsController.showRewardedAd()
+                          : null,
+                      child: isLoading
+                          ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(Colors.white)))
+                          : const Text('Watch Ad (0.5 Cr)', style: TextStyle(color: Colors.white)), // Shorter text
+                    );
+                  }),
+                ),
+                const SizedBox(width: 10), // Spacing between buttons
+                // "Buy Credits" Button
+                Expanded( // Use Expanded
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent, // Example color
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10), // Adjusted padding
+                      textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold) // Adjusted font size
+                    ),
+                    onPressed: () {
+                      Get.to(() => const BuyCreditsScreen());
+                    },
+                    child: const Text('Buy Credits', style: TextStyle(color: Colors.white)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
           GetBuilder<HomeScreenController>(
             assignId: true,
             builder: (logic) {
@@ -185,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     shrinkWrap: true,
                                     physics:
                                         const NeverScrollableScrollPhysics(),
-                                    itemCount: chatGPTList.length, // Assuming chatGPTList is defined elsewhere or in scope
+                                    itemCount: chatGPTList.length,
                                     itemBuilder: (context, index) {
                                       return chatGPTList[index].name ==
                                               homeScreenController.selectedText
@@ -235,7 +289,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Theme.of(context).brightness == Brightness.light // context.isDarkMode is not standard, using Theme.of(context).brightness
+                    color: Theme.of(context).brightness == Brightness.light
                         ? const Color(0xffEDEDED)
                         : Colors.white,
                   ),
@@ -246,10 +300,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           children: [
                             AppTextField(
-                              // autoFocus: autoFocus, // autoFocus was unused
                               focusNod: inputNode,
                               controller: messageController,
-                              maxLines: messageController.text.length < 10 // This dynamic maxLines based on length is a bit unusual
+                              maxLines: messageController.text.length < 10
                                   ? messageController.text.length < 20
                                       ? 3
                                       : 1
@@ -262,7 +315,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () async {
                              if (messageController.text.isNotEmpty) {
                               Get.offAll(
-                                  () => ChatScreen(message: messageController.text), // Updated Navigation
+                                  () => ChatScreen(message: messageController.text),
                                   transition: Transition.rightToLeft);
                               messageController.clear();
                             } else {
