@@ -1,7 +1,5 @@
 // ignore_for_file: unrelated_type_equality_checks, use_build_context_synchronously
-// import 'package:chat_gpt/screens/premium_pages/premium_screen.dart'; // Unused
 import 'package:chat_gpt/utils/app_keys.dart';
-// import 'package:chat_gpt_sdk/chat_gpt_sdk.dart'; // Removed
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:path_provider/path_provider.dart';
@@ -15,49 +13,57 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../constant/app_color.dart';
 import '../../constant/app_icon.dart';
-import '../../modals/chat_message.dart';
 import '../../modals/message_model.dart';
 import 'package:chat_gpt/services/ai_service.dart';
 import '../../utils/shared_prefs_utils.dart';
 import '../../widgets/app_textfield.dart';
-// import '../../widgets/message_bubble.dart'; // Unused
-// import '../../widgets/message_composer.dart'; // Unused
+import '../../widgets/message_bubble.dart'; // Import MessageBubble
 import '../home_pages/home_screen.dart';
 import '../home_pages/home_screen_controller.dart';
-// import '../premium_pages/premium_screen_controller.dart'; // Unused
-// import '../setting_pages/setting_page_controller.dart'; // Unused
 import 'chat_controller.dart';
 import 'dart:io';
 import 'package:flutter_tts/flutter_tts.dart';
 
-
-enum TtsState {playing, stopped, paused, continued}
-
-
 class ChatScreen extends StatefulWidget {
-  String message;
+  final String message;
 
-  ChatScreen({Key? key,required this.message}) : super(key: key);
-
+  const ChatScreen({Key? key, required this.message}) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-
-  ScreenshotController screenshotController = ScreenshotController();
-  HomeScreenController homeScreenController = HomeScreenController();
+  final ScreenshotController screenshotController = ScreenshotController();
+  final HomeScreenController homeScreenController = Get.put(HomeScreenController()); // Ensure controller is put if not already
   int messageLimit = maxMessageLimit;
-  bool isVoiceOn = voiceOff; // Added field, initialized with voiceOff from app_keys
+  bool isVoiceOn = voiceOff;
 
-  final _messages = <ChatMessage>[
-    ChatMessage('Hello, how can I help?', false),
-  ];
+  final FlutterTts flutterTts = FlutterTts();
+  final ChatController chatController = Get.put(ChatController());
+  final TextEditingController messageController = TextEditingController();
+  final List<MessageModel> messageList = [];
+  bool inProgress = true;
+  final ScrollController scrollController = ScrollController();
+  final GlobalKey globalKey = GlobalKey();
 
-  var _awaitingResponse = false;
+  @override
+  void initState() {
+    super.initState();
+    getLocalData();
+    addMessageToMessageList(widget.message, true);
+    sendMessageToAPI(widget.message);
+  }
 
-  getLocalData() async {
+  @override
+  void dispose() {
+    messageController.dispose();
+    flutterTts.stop();
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  Future<void> getLocalData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     messageLimit = prefs.getInt('messageLimit') ?? maxMessageLimit;
     isVoiceOn = prefs.getBool('voice') ?? voiceOff;
@@ -65,76 +71,176 @@ class _ChatScreenState extends State<ChatScreen> {
     if (mounted) setState(() {});
   }
 
-  storeMessage(int value) async {
+  Future<void> storeMessage(int value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('messageLimit', value);
   }
 
-
-  storeVoice(bool value) async {
+  Future<void> storeVoice(bool value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('voice', value);
     isVoiceOn = prefs.getBool('voice') ?? voiceOff;
     if (mounted) setState(() {});
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getLocalData();
-    addMessageToMessageList(widget.message,true);
-    sendMessageToAPI(widget.message);
-  }
-
-  final FlutterTts flutterTts = FlutterTts();
-
-
-  ChatController chatController = Get.put(ChatController());
-  TextEditingController messageController = TextEditingController();
-  List<MessageModel> messageList = [];
-  bool inProgress = true;
-
-  _speak(String value) async{
+  Future<void> _speak(String value) async {
     await flutterTts.setLanguage("en-US");
     await flutterTts.setPitch(1);
     await flutterTts.speak(value);
   }
 
-
-  @override
-  void dispose() {
-    messageController.dispose();
-    flutterTts.stop();
-    super.dispose();
+  void _downScroll() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
   }
 
-  final scrollController = ScrollController();
+  Widget _buildMessageListWidget() {
+    return ListView.builder(
+      controller: scrollController,
+      itemBuilder: (context, index) {
+        final messageModel = messageList[index];
+        final String messageContent = messageModel.sentByMe ? messageModel.message : messageModel.answer;
+        // Conditionally add copy button for AI messages
+        Widget? trailingWidget;
+        if (!messageModel.sentByMe) {
+            trailingWidget = IconButton(
+                icon: const Icon(Icons.copy, color: Colors.white, size: 18),
+                onPressed: () async {
+                    showToast(text: 'copy'.tr);
+                    await Clipboard.setData(ClipboardData(text: messageModel.answer));
+                },
+            );
+        }
 
-
-  downScroll() {
-    scrollController.animateTo(
-      scrollController.position.maxScrollExtent,
-      duration:  const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
+        return MessageBubble(
+          message: messageContent,
+          isUserMessage: messageModel.sentByMe,
+          trailing: trailingWidget,
+        );
+      },
+      reverse: true, // To keep messages at the bottom and scroll up
+      itemCount: messageList.length,
     );
   }
 
-  GlobalKey globalKey = GlobalKey();
+  Widget _buildLoadingIndicator() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CircleAvatar(
+            radius: 16,
+            backgroundColor: const Color(0xffB2E7CA),
+            child: Center(child: Image.asset(AppAssets.botImage)),
+          ),
+          5.0.addWSpace(),
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.only(right: 50), // Keep consistent with bubble alignment
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              padding: const EdgeInsets.all(10), // Adjusted padding
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Lottie.asset(AppAssets.loadingFile, height: 20),
+                  5.0.addWSpace(),
+                  const Text("Typing...", style: TextStyle(color: Colors.white70)),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  Future<void> sendMessageToAPI(String question) async {
+    if (mounted) {
+      setState(() {
+        inProgress = true;
+      });
+    }
+    _downScroll(); // Scroll down when new message/loading starts
+
+    String day = DateTime.now().day.toString();
+    String month = DateTime.now().month.toString();
+    String year = DateTime.now().year.toString();
+    String answer = "Failed to get response please try again";
+
+    try {
+      answer = await AIService().generateContentWithGemini(question);
+    } catch (e) {
+      print("sendMessageToAPI Error: $e");
+      // The error from AIService might already be user-friendly.
+      // If not, use a generic one.
+      answer = e.toString().toLowerCase().contains("error:") ? e.toString() : "Error: AI service failed. $e";
+    } finally {
+      await SharedPrefsUtils.storeChat(
+          chat: question, // Use the original question
+          sentByMe: false, // This seems incorrect, should be `true` for the user's message, but API response is AI
+          dateTime: "$day/$month/$year",
+          answer: answer);
+      addMessageToMessageList(answer, false);
+      if (isVoiceOn == true && answer.isNotEmpty && !answer.toLowerCase().contains("error:")) {
+        _speak(answer);
+      } else if (isVoiceOn == true && (answer.isEmpty || answer.toLowerCase().contains("error:"))) {
+        _speak("Failed to get response please try again");
+      }
+      if (mounted) {
+        setState(() {
+          inProgress = false;
+        });
+      }
+      _downScroll(); // Scroll down after message is received
+    }
+  }
+
+  void addMessageToMessageList(String text, bool sentByMe) {
+    String day = DateTime.now().day.toString();
+    String month = DateTime.now().month.toString();
+    String year = DateTime.now().year.toString();
+
+    if (mounted) {
+      setState(() {
+        messageList.insert(
+            0, // Insert at the beginning for reverse ListView
+            MessageModel(
+                message: sentByMe ? text : "",
+                answer: sentByMe ? "" : text,
+                sentByMe: sentByMe,
+                dateTime: "$day/$month/$year"));
+      });
+    }
+     _downScroll(); // Scroll down when new message is added
+  }
+
 
   @override
   Widget build(BuildContext context) {
-
-    final BannerAd myBanner = BannerAd(
-      adUnitId: Platform.isAndroid ? bannerAndroidID : bannerIOSID,
-      size: AdSize.banner,
-      request: const AdRequest(),
-      listener: const BannerAdListener(),
-    );
-    myBanner.load();
+    // Banner Ad setup (keep as is or adjust if needed)
+    // final BannerAd myBanner = BannerAd(...); myBanner.load();
 
     return WillPopScope(
       onWillPop: () async {
-        Get.offAll(const HomeScreen(), transition: Transition.rightToLeft);
+        Get.offAll(() => const HomeScreen(), transition: Transition.rightToLeft);
         return true;
       },
       child: Screenshot(
@@ -147,14 +253,14 @@ class _ChatScreenState extends State<ChatScreen> {
             backgroundColor: Theme.of(context).colorScheme.background,
             elevation: 0,
             actions: [
-              adsOff == true  ? Container() : GestureDetector(
-                onTap: (){
-                  showModalBottomSheet(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
+              if (adsOff == false) // Check if ads are not off
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                       backgroundColor: Colors.white,
-                    context: context, builder: (BuildContext context) {
+                      context: context,
+                      builder: (BuildContext context) {
                         return Container(
                           height: 170,
                           color: Colors.white,
@@ -164,29 +270,30 @@ class _ChatScreenState extends State<ChatScreen> {
                               15.0.addHSpace(),
                               AppIcon.infoIcon(),
                               20.0.addHSpace(),
-                              Text("Messages function as the credit system for Message. One request to Message deducts one message from your balance. You will be granted $maxMessageLimit wishes daily",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w500,fontSize: 15),).marginSymmetric(horizontal: 12),
+                              Text(
+                                "Messages function as the credit system for Message. One request to Message deducts one message from your balance. You will be granted $maxMessageLimit wishes daily",
+                                style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 15),
+                              ).marginSymmetric(horizontal: 12),
                             ],
                           ),
                         );
+                      },
+                    );
                   },
-
-                  );
-                },
-                child: Container(
-                  height: 30,
-                  width: 50,
-                  decoration: BoxDecoration(color: AppColor.greenColor,borderRadius: BorderRadius.circular(75)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text("$messageLimit",style: TextStyle(color: Colors.white),),
-                      AppIcon.starIcon()
-                    ],
-                  ),
-                ).marginSymmetric(vertical: 10),
-              ),
-
+                  child: Container(
+                    height: 30,
+                    width: 50, // Consider making this wider if text doesn't fit
+                    decoration: BoxDecoration(color: AppColor.greenColor, borderRadius: BorderRadius.circular(75)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("$messageLimit", style: const TextStyle(color: Colors.white)),
+                        AppIcon.starIcon()
+                      ],
+                    ),
+                  ).marginSymmetric(vertical: 10),
+                ),
               IconButton(
                 onPressed: () async {
                   isVoiceOn = !isVoiceOn;
@@ -198,290 +305,85 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               IconButton(
                 onPressed: () async {
-                await screenshotController.capture(delay: const Duration(milliseconds: 10)).then((image) async {
-                  if (image != null) {
-                    final directory = await getApplicationDocumentsDirectory();
-                    final imagePath = await File('${directory.path}/image.png').create();
-                    await imagePath.writeAsBytes(image);
-                    await Share.shareFiles([imagePath.path]);
-                  }
-                });
-              },
+                  await screenshotController.capture(delay: const Duration(milliseconds: 10)).then((image) async {
+                    if (image != null) {
+                      final directory = await getApplicationDocumentsDirectory();
+                      final imagePath = await File('${directory.path}/image.png').create();
+                      await imagePath.writeAsBytes(image);
+                      await Share.shareFiles([imagePath.path]);
+                    }
+                  });
+                },
                 icon: AppIcon.shareIcon(context),
               ),
             ],
             leading: IconButton(
-                onPressed: (){
-                  Get.offAll(const HomeScreen(), transition: Transition.rightToLeft);
-                 },
-                icon: Icon(Icons.arrow_back_rounded,color: Theme.of(context).textTheme.displayLarge!.color,)),
+                onPressed: () {
+                  Get.offAll(() => const HomeScreen(), transition: Transition.rightToLeft);
+                },
+                icon: Icon(Icons.arrow_back_rounded, color: Theme.of(context).textTheme.bodyLarge?.color)),
           ),
-
-          body: Stack(
-            alignment: Alignment.bottomCenter,
+          body: Column( // Changed Stack to Column for simpler layout of list and input
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: messageList.isEmpty
-                          ? const Center(
+              Expanded(
+                child: messageList.isEmpty && !inProgress
+                    ? const Center(
                         child: Text(
-                          "",
+                          "No messages yet. Ask something!", // Placeholder for empty chat
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 28),
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
                         ),
                       )
-                          : buildMessageListWidget()),
-                ],
+                    : _buildMessageListWidget(),
               ),
-              buildSendWidget(),
+              if (inProgress) _buildLoadingIndicator(), // Show loading indicator below the list
+              _buildSendWidget(), // Keep send widget at the bottom
             ],
-          ),
+          ).marginOnly(bottom: Platform.isIOS ? 20 : 10), // Adjust bottom margin for better spacing
         ),
       ),
     );
   }
 
-  Widget buildSendWidget() {
-    return  Container(
-        height: 55,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Theme.of(context).brightness == Brightness.light ?  const  Color(0xffEDEDED) : Colors.white,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-                child: AppTextField(
-                  controller: messageController,
-                  maxLines: 1,
-                  onTap: () {
-                    downScroll();
-                  },
-                )
-            ),
-            IconButton(
-                onPressed: () async {
-                  await flutterTts.stop();
-                  hideKeyboard(context);
-                  String question = messageController.text;
-                  if (question.isEmpty) return;
-                  addMessageToMessageList(question, true);
-                  sendMessageToAPI(question);
-                  messageController.clear();
-                },
-                icon: const Icon(Icons.send,color: Color(0xffABAABA),))
-          ],
-        )
-    ).marginOnly(left: 15,right: 15,bottom: 50);
-  }
-
-
-
-  Widget buildMessageListWidget() {
-    return SingleChildScrollView(
-      controller: scrollController,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+  Widget _buildSendWidget() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0), // Added padding
+      color: Theme.of(context).colorScheme.background, // Match scaffold background
+      child: Row(
         children: [
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return Container(
-                padding: const EdgeInsets.all(10), margin: messageList[index].sentByMe
-                  ?
-              const EdgeInsets.only(left: 50)
-                  :
-              const EdgeInsets.only(right: 50),
-                child: Align(
-                  alignment: messageList[index].sentByMe
-                      ?
-                  Alignment.topRight
-                      :
-                  Alignment.topLeft,
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: messageList[index].sentByMe
-                            ?
-                        MainAxisAlignment.end
-                            :
-                        MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          messageList[index].sentByMe
-                              ?
-                        Container()
-                        :
-                       CircleAvatar(
-                        radius: 16,
-                        backgroundColor: const Color(0xffB2E7CA), child: Center(child: Image.asset(AppAssets.botImage)),
-                       ),
-                          5.0.addWSpace(),
-                          Expanded(
-                              child: Container(
-                                 decoration: BoxDecoration(
-                               borderRadius: messageList[index].sentByMe
-                                  ?
-                              const BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20),bottomLeft: Radius.circular(20))
-                                   :
-                              const BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20),bottomRight: Radius.circular(20)),
-                              color: messageList[index].sentByMe ? AppColor.greenColor : Theme.of(context).colorScheme.primary,),
-                                    padding: const EdgeInsets.all(10),
-                                    child:  messageList[index].sentByMe
-                                ?
-                            Text(
-                                messageList[index].message,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                )
-                            )
-                                :
-                            Column(
-                              children: [
-                                Text(messageList[index].answer, style: const TextStyle(fontSize: 16, color: Colors.white,)),
-                                5.0.addHSpace(),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    GestureDetector(
-                                      onTap : ()  async {
-                                        showToast(text: 'copy'.tr);
-                                        await Clipboard.setData(ClipboardData(text: messageList[index].answer));},
-                                      child: const  SizedBox(
-                                        height: 30,
-                                        width: 30,
-                                        child: Center(child: Icon(Icons.copy,color: Colors.white,)),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            )
-                        ),
-                      ),
-                      5.0.addWSpace(),
-                      messageList[index].sentByMe
-                              ?
-                      CircleAvatar(radius: 16,backgroundColor: const Color(0xffD8F4E5),child: Center(child: Text("me".tr,style: TextStyle(color: AppColor.greenColor,fontWeight: FontWeight.w700,fontSize: 10))),)
-                              :
-                      Container(),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-            reverse: true,
-            itemCount: messageList.length,
-          ),
-          if(inProgress)
-            Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CircleAvatar(radius: 16,backgroundColor: const Color(0xffB2E7CA),   child: Center(child: Image.asset(AppAssets.botImage)),) ,
-              5.0.addWSpace(),
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.only(right: 50),
-                  decoration:  BoxDecoration(
-                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20),bottomRight: Radius.circular(20)),
-                    color:  Theme.of(context).colorScheme.primary,
-                  ),
-                  padding: const EdgeInsets.all(8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Lottie.asset(AppAssets.loadingFile,height: 20),
-                    ],
-                  ),
-                ),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25), // More rounded text field
+                color: Theme.of(context).brightness == Brightness.light ? const Color(0xffEDEDED) : Theme.of(context).colorScheme.surface, // Adjusted color
               ),
-              5.0.addWSpace(),
-              Container(),
-            ],
+              child: AppTextField(
+                controller: messageController,
+                hintText: "Type a message...", // Added hint text
+                maxLines: 5, // Allow more lines for input
+                minLines: 1,
+                onTap: _downScroll,
+              ),
+            ),
           ),
+          const SizedBox(width: 8),
+          IconButton(
+            onPressed: () async {
+              await flutterTts.stop();
+              hideKeyboard(context);
+              String question = messageController.text.trim(); // Trim whitespace
+              if (question.isEmpty) return;
+              addMessageToMessageList(question, true);
+              sendMessageToAPI(question);
+              messageController.clear();
+            },
+            icon: Icon(Icons.send, color: AppColor.greenColor, size: 28), // Adjusted icon color and size
+          )
         ],
       ),
-    ).marginOnly(bottom:  120);
+    );
   }
-
-  bool isColor =  false;
-
-  dynamic chatComplete(String question) async {
-    String data = "";
-    try {
-      final response = await AIService().generateContentWithGemini(question);
-      print("~~~~~~~~~~~~~from AI: $response");
-      data = response;
-      if (mounted) setState(() {});
-    } catch (e) {
-      print("Gemini call failed: $e");
-      data = "Error: AI service failed. $e";
-    }
-    return data;
-  }
-
-
-
-  void sendMessageToAPI(String question) async {
-    if (mounted) {
-      setState(() {
-        inProgress = true;
-      });
-    }
-
-    String day = DateTime.now().day.toString();
-    String month = DateTime.now().month.toString();
-    String year = DateTime.now().year.toString();
-    String answer = "Failed to get response please try again"; // Default answer
-    try {
-      answer = await chatComplete(question);
-    } catch (e) {
-      print("sendMessageToAPI Error: $e");
-    } finally {
-       await SharedPrefsUtils.storeChat(chat: messageController.text.isEmpty ? widget.message:   messageController.text , sentByMe: false,dateTime: "$day/$month/$year",answer: answer);
-      addMessageToMessageList(answer, false);
-      if (isVoiceOn == true && answer.isNotEmpty && !answer.toLowerCase().contains("error:")) {
-         _speak(answer);
-      } else if (isVoiceOn == true && (answer.isEmpty || answer.toLowerCase().contains("error:"))) {
-        _speak("Failed to get response please try again");
-      }
-      if (mounted) {
-        setState(() {
-           inProgress = false;
-        });
-      }
-      Future.delayed(Duration(seconds: 1),(){
-        downScroll();
-      });
-    }
-  }
-
-  void addMessageToMessageList(String text, bool sentByMe) {
-    String day = DateTime.now().day.toString();
-    String month = DateTime.now().month.toString();
-    String year = DateTime.now().year.toString();
-
-    if (mounted) {
-      setState(() {
-        messageList.insert(0, MessageModel(
-          message: sentByMe ? text : "",
-          answer: sentByMe ? "" : text,
-          sentByMe: sentByMe,
-          dateTime: "$day/$month/$year"
-        ));
-      });
-    }
-  }
-
-  List<Map> chatMessages = [];
 }
 
-List<String> answerList = [];
+// Removed global answerList as it was unused.
+// Removed global chatMessages as it was unused.
