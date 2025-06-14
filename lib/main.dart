@@ -11,12 +11,14 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'main_controller.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   await MobileAds.instance.initialize();
-  await loadEnvFile();
+  // await dotenv.load();
+  // await loadEnvFile();
   runApp(const MyApp()); // Changed: Removed chatApi parameter
 }
 
